@@ -32,6 +32,7 @@ public class GameFacade
     private GameEventSystem mGameEventSystem;//游戏事件系统
     private StageSystem mStageSystem;//关卡系统
     private HeartSystem mHeartSystem;//关卡生命值系统（心）
+    private ScreenSystem mScreenSystem;//屏幕系统
 
     private CampInfoUI mCampInfoUI;//兵营UI面板
     private GamePauseUI mGamePauseUI;//游戏暂停UI面板
@@ -51,6 +52,7 @@ public class GameFacade
         mGameEventSystem = new GameEventSystem();
         mStageSystem = new StageSystem();
         mHeartSystem = new HeartSystem();
+        mScreenSystem = new ScreenSystem();
 
         mCampInfoUI = new CampInfoUI();
         mGamePauseUI = new GamePauseUI();
@@ -64,6 +66,7 @@ public class GameFacade
         mGameEventSystem.Init();
         mStageSystem.Init();
         mHeartSystem.Init();
+        mScreenSystem.Init();
 
         mCampInfoUI.Init();
         mGamePauseUI.Init();
@@ -84,6 +87,7 @@ public class GameFacade
         mGameEventSystem.Update();
         mStageSystem.Update();
         mHeartSystem.Update();
+        mScreenSystem.Update();
 
         mCampInfoUI.Update();
         mGamePauseUI.Update();
@@ -103,6 +107,7 @@ public class GameFacade
         mGameEventSystem.Release();
         mStageSystem.Release();
         mHeartSystem.Release();
+        mScreenSystem.Release();
 
         mCampInfoUI.Release();
         mGamePauseUI.Release();
