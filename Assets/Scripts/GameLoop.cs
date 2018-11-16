@@ -30,6 +30,6 @@ public class GameLoop : MonoBehaviour {
     /// </summary>
 	void Update () {
         controller.StatUpdate();
-
+        
     }
 }
