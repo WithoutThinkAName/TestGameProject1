@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Common;
 
 
 /// <summary>
@@ -33,6 +34,10 @@ public class GameFacade
     private StageSystem mStageSystem;//关卡系统
     private HeartSystem mHeartSystem;//关卡生命值系统（心）
     private ScreenSystem mScreenSystem;//屏幕系统
+    private UIManagerSystem mUIManagerSystem;//UI管理系统
+
+    private ClientSystem mClientSystem;//客户端系统
+    private RequestSystem mRequestSystem;//请求处理系统
 
     private CampInfoUI mCampInfoUI;//兵营UI面板
     private GamePauseUI mGamePauseUI;//游戏暂停UI面板
@@ -53,6 +58,12 @@ public class GameFacade
         mStageSystem = new StageSystem();
         mHeartSystem = new HeartSystem();
         mScreenSystem = new ScreenSystem();
+        mUIManagerSystem = new UIManagerSystem();
+
+        mClientSystem = new ClientSystem();
+        mRequestSystem = new RequestSystem();
+
+
 
         mCampInfoUI = new CampInfoUI();
         mGamePauseUI = new GamePauseUI();
@@ -67,6 +78,10 @@ public class GameFacade
         mStageSystem.Init();
         mHeartSystem.Init();
         mScreenSystem.Init();
+        mUIManagerSystem.Init();
+
+        mClientSystem.Init();
+        mRequestSystem.Init();
 
         mCampInfoUI.Init();
         mGamePauseUI.Init();
@@ -88,6 +103,10 @@ public class GameFacade
         mStageSystem.Update();
         mHeartSystem.Update();
         mScreenSystem.Update();
+        mUIManagerSystem.Update();
+
+        mClientSystem.Update();
+        mRequestSystem.Update();
 
         mCampInfoUI.Update();
         mGamePauseUI.Update();
@@ -108,6 +127,10 @@ public class GameFacade
         mStageSystem.Release();
         mHeartSystem.Release();
         mScreenSystem.Release();
+        mUIManagerSystem.Release();
+
+        mClientSystem.Release();
+        mRequestSystem.Release();
 
         mCampInfoUI.Release();
         mGamePauseUI.Release();
@@ -296,5 +319,14 @@ public class GameFacade
     public void SetIsGameOver(bool isGameover)
     {
         mIsGaneOver = isGameover;
+    }
+    /// <summary>
+    /// 处理客户端请求
+    /// </summary>
+    /// <param name="requestCode"></param>
+    /// <param name="data"></param>
+    public void HandleRequest(RequestCode requestCode, string data)
+    {
+        mRequestSystem.HandleRequest(requestCode, data);
     }
 }

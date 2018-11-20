@@ -33,7 +33,8 @@ public abstract class ISoldier : ICharacter
     /// <param name="targets">当前存活的敌人</param>
     public override void UpdateFSMAI(List<ICharacter> targets)
     {
-        if (mIsKilled) return;        
+        if (mIsKilled) return;
+        //Debug.Log(position);
         mFSMSystem.currentState.Reason(targets);
         mFSMSystem.currentState.Act(targets);
     }
