@@ -5,6 +5,7 @@ using UnityEngine;
 
 /// <summary>
 /// UI管理器
+/// 从注册登录界面开始使用
 /// </summary>
 public class UIManagerSystem:IGameSystem
 {
@@ -24,13 +25,66 @@ public class UIManagerSystem:IGameSystem
     private Dictionary<UIPanelType, IBaseUI> panelDict;//保存所有实例化面板的游戏物体身上的IBaseUI组件
     private Stack<IBaseUI> panelStack;
 
-    //private UIManagerSystem()
-    //{
-    //    ParseUIPanelTypeJson();
-    //}
+    private string mMsgAsyn = null;
 
+    public override void Init()
+    {
+        base.Init();
+        ParseUIPanelTypeJson();
+        InitLoginStageUI();
+    }
+    /// <summary>
+    /// 加载Json
+    /// </summary>
+    private void ParseUIPanelTypeJson()
+    {
+        panelPathDict = GameMainFacade.Instance.ParseUIPanelTypeJson();
+    }
+    /// <summary>
+    /// 初始化登录面板
+    /// </summary>
+    public void InitLoginStageUI()
+    {
+        PushPanel(UIPanelType.LoginBackgroundUI);
+    }
+    /// <summary>
+    /// 初始化主菜单面板UI
+    /// </summary>
+    public void InitMainMenuUI()
+    {
+        ClearPanel();
+        PushPanel(UIPanelType.MainMenuUI);
+    }
 
+    public override void Update()
+    {
+        base.Update();
+        if (mMsgAsyn!=null)
+        {
+            ShowMessageUI(mMsgAsyn);
+            mMsgAsyn = null;
+        }
+    }
 
+    public void ShowMessageUIAsyn(string message)
+    {
+        mMsgAsyn = message;
+    }
+
+    /// <summary>
+    /// 提示消息框
+    /// </summary>
+    /// <param name="message"></param>
+    public void ShowMessageUI(string message)
+    {
+        if (panelStack == null)
+            panelStack = new Stack<IBaseUI>();
+
+        MessageUI panel =(MessageUI) GetPanel(UIPanelType.MessageUI);
+        
+        panel.OnEnter();
+        panel.SetMessage(message);
+    }
 
 
 
@@ -57,7 +111,7 @@ public class UIManagerSystem:IGameSystem
     /// 出栈 ，把页面从界面上移除
     /// </summary>
     public void PopPanel()
-    {
+    {       
         if (panelStack == null)
             panelStack = new Stack<IBaseUI>();
 
@@ -72,6 +126,30 @@ public class UIManagerSystem:IGameSystem
         topPanel2.OnResume();
 
     }
+    /// <summary>
+    /// 清除栈中所有Panel
+    /// 场景切换重置
+    /// </summary>
+    public void ClearPanel()
+    {
+        panelDict.Clear();
+
+        if (panelStack == null)
+            panelStack = new Stack<IBaseUI>();
+
+        if (panelStack.Count <= 0) return;
+
+        while (true)
+        {
+            //关闭栈顶页面的显示
+            IBaseUI topPanel = panelStack.Pop();
+            topPanel.OnExit();
+
+            if (panelStack.Count <= 0) break;
+        }
+       
+    }
+
 
     /// <summary>
     /// 根据面板类型 得到实例化的面板
@@ -97,7 +175,9 @@ public class UIManagerSystem:IGameSystem
             string path = panelPathDict.TryGet(panelType);
             GameObject instPanel = GameObject.Instantiate(Resources.Load(path)) as GameObject;
             instPanel.transform.SetParent(CanvasTransform, false);
+            instPanel.GetComponent<IBaseUI>().UIManager = this;
             panelDict.Add(panelType, instPanel.GetComponent<IBaseUI>());
+            instPanel.GetComponent<IBaseUI>().Init();
             return instPanel.GetComponent<IBaseUI>();
         }
         else
@@ -106,35 +186,7 @@ public class UIManagerSystem:IGameSystem
         }
 
     }
-
-    [Serializable]
-    class UIPanelTypeJson
-    {
-        public List<UIPanelInfo> infoList;
-    }
-    private void ParseUIPanelTypeJson()
-    {
-        panelPathDict = new Dictionary<UIPanelType, string>();
-
-        TextAsset ta = Resources.Load<TextAsset>("UIPanelType");
-
-        UIPanelTypeJson jsonObject = JsonUtility.FromJson<UIPanelTypeJson>(ta.text);
-
-        foreach (UIPanelInfo info in jsonObject.infoList)
-        {
-            //Debug.Log(info.panelType);
-            panelPathDict.Add(info.panelType, info.path);
-        }
-    }
-
-    /// <summary>
-    /// just for test
-    /// </summary>
-    public void Test()
-    {
-        string path;
-        panelPathDict.TryGetValue(UIPanelType.Knapsack, out path);
-        Debug.Log(path);
-    }
+    
+    
 }
 

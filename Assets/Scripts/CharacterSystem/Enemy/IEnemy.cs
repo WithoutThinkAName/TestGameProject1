@@ -80,7 +80,7 @@ public abstract class IEnemy : ICharacter
     {
         base.Killed();
         //Debug.Log("EnemyBeKilled");
-        GameFacade.Instance.NotifySubject(GameEventType.EnemyKilled);
+        GameStageFacade.Instance.NotifySubject(GameEventType.EnemyKilled);
     }
     /// <summary>
     /// 敌人抵达目标位置方法
@@ -89,7 +89,7 @@ public abstract class IEnemy : ICharacter
     {
         mIsKilled = true;
         mCanDestoryImmediately = true;
-        GameFacade.Instance.ReduceHeart();
+        GameStageFacade.Instance.ReduceHeart();
     }
 
     /// <summary>

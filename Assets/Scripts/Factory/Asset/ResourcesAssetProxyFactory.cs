@@ -16,6 +16,7 @@ public class ResourcesAssetProxyFactory:IAssetFactory
     private Dictionary<string, GameObject> mWeapons = new Dictionary<string, GameObject>();
     private Dictionary<string, GameObject> mEffects = new Dictionary<string, GameObject>();
     private Dictionary<string, AudioClip> mAudioClips = new Dictionary<string, AudioClip>();
+    private Dictionary<string, AudioClip> mSoundClips = new Dictionary<string, AudioClip>();
     private Dictionary<string, Sprite> mSprites = new Dictionary<string, Sprite>();
    
 
@@ -95,6 +96,26 @@ public class ResourcesAssetProxyFactory:IAssetFactory
             Sprite sprite = mAssetFactory.LoadSprite(name);
             mSprites.Add(name, sprite);
             return sprite;
+        }
+    }
+
+   
+    public Dictionary<UIPanelType, string> ParseUIPanelTypeJson()
+    {
+        return mAssetFactory.ParseUIPanelTypeJson();
+    }
+
+    public AudioClip LoadSoundClip(string name)
+    {
+        if (mSoundClips.ContainsKey(name))
+        {
+            return mSoundClips[name];
+        }
+        else
+        {
+            AudioClip audio = mAssetFactory.LoadSoundClip(name);
+            mSoundClips.Add(name, audio);
+            return audio;
         }
     }
 }

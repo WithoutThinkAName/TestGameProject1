@@ -19,6 +19,6 @@ public class SoldierOnClick:MonoBehaviour
     void OnMouseUpAsButton()
     {
         //Debug.Log(gameObject.name);
-        GameFacade.Instance.ShowSoldierInfo(mSoldier);
+        GameStageFacade.Instance.ShowSoldierInfo(mSoldier);
     }
 }

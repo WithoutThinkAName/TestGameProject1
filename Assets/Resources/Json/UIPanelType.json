@@ -1,26 +1,19 @@
 {
 "infoList":
 [
-{"panelTypeString":"",
-"path":"UIPanel/"},
+{"panelTypeString":"MessageUI",
+"path":"UIPanel/Message"},
 
-{"panelTypeString":"",
-"path":"UIPanel/"},
+{"panelTypeString":"LoginBackgroundUI",
+"path":"UIPanel/LoginBackgroundPanel"},
 
-{"panelTypeString":"",
-"path":"UIPanel/"},
+{"panelTypeString":"LoginUI",
+"path":"UIPanel/LoginPanel"},
 
-{"panelTypeString":"",
-"path":"UIPanel/"},
+{"panelTypeString":"RegistrationUI",
+"path":"UIPanel/RegistrationPanel"}
 
-{"panelTypeString":"",
-"path":"UIPanel/"},
 
-{"panelTypeString":"",
-"path":"UIPanel/"},
-
-{"panelTypeString":"",
-"path":"UIPanel/"}
 
 ]
 }

@@ -34,8 +34,6 @@ public class GameStateInfoUI:IBaseUI
     public override void Init()
     {
         base.Init();
-        GameObject canvas = GameObject.Find("Canvas");
-        mUIRoot = UnityTool.FindChildByName(canvas, "GameStateInfo");
 
         GameObject heart1 = UnityTool.FindChildByName(mUIRoot, "Heart1");
 
@@ -44,7 +42,7 @@ public class GameStateInfoUI:IBaseUI
         mEnemyCount = UITools.FindChild<Text>(mUIRoot, "AliveEnemy");
         mCurrentStage = UITools.FindChild<Text>(mUIRoot, "CurrentStage");
         mPauseBtn = UITools.FindChild<Button>(mUIRoot, "PauseBtn");
-        mGameOverUI = UnityTool.FindChildByName(canvas, "GameOverUI");
+        //mGameOverUI = UnityTool.FindChildByName(canvas, "GameOverUI");
         mGameOverLab= UITools.FindChild<Text>(mUIRoot, "GameOverLab");
         mBackMenuBtn = UITools.FindChild<Button>(mUIRoot, "GameOverBtn");
         mMessage = UITools.FindChild<Text>(mUIRoot, "Message");
@@ -140,14 +138,14 @@ public class GameStateInfoUI:IBaseUI
     private void PauseBtnOcClick()
     {
         Time.timeScale = 0;
-        GameFacade.Instance.ShowGamePauseUI();
+        GameStageFacade.Instance.ShowGamePauseUI();
     }
     /// <summary>
     /// 游戏结束返回主菜单按钮点击事件
     /// </summary>
     public void GameOverBackMainMenu()
     {
-        GameFacade.Instance.SetIsGameOver(true);
+        GameStageFacade.Instance.SetIsGameOver(true);
     }
 }
 

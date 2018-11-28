@@ -178,7 +178,7 @@ public abstract class ICharacter
         }
         else
         {
-            mGameObject.AddComponent<DestoryForTime>();
+            mGameObject.AddComponent<DestoryForTime>().SetDestory(1f);
         }
     }
     /// <summary>
@@ -220,7 +220,7 @@ public abstract class ICharacter
         GameObject effectGO = FactoryManager.assetFactory.LoadEffect(effectName);
         effectGO.transform.position = position;
 
-        effectGO.AddComponent<DestoryForTime>();
+        effectGO.AddComponent<DestoryForTime>().SetDestory(1f);
     }
     /// <summary>
     /// 执行播放声音

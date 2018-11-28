@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 using System;
 
 [Serializable]
@@ -31,4 +31,10 @@ public class UIPanelInfo :ISerializationCallbackReceiver {
     {
         
     }
+}
+
+[Serializable]
+public class UIPanelTypeJson
+{
+    public List<UIPanelInfo> infoList;
 }

@@ -24,8 +24,6 @@ public class SoldierInfoUI:IBaseUI
     public override void Init()
     {
         base.Init();
-        GameObject canvas = GameObject.Find("Canvas");
-        mUIRoot = UnityTool.FindChildByName(canvas, "SoldierInfo");
 
         mSoldierIcon = UITools.FindChild<Image>(mUIRoot, "SoldierIcon");
         mSoldierNameLab = UITools.FindChild<Text>(mUIRoot, "SoldierNameLab");

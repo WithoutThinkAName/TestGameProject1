@@ -27,11 +27,13 @@ public class StartState:ISceneState
     /// </summary>
     public override void StateUpdate()
     {
+        base.StateUpdate();
         mLogo.color = Color.Lerp(mLogo.color, Color.black, mSmoothingSpeed*Time.deltaTime);
         mWaitTime -= Time.deltaTime;
         if (mWaitTime<=0)
         {
-            mController.SetState(new MainMenuState(mController));
+            //mController.SetState(new MainMenuState(mController));
+            mController.SetState(new LoginAndRegistrationState(mController));
         }
     }
 }

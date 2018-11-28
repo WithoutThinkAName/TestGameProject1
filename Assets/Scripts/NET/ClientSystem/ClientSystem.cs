@@ -26,7 +26,6 @@ public class ClientSystem:IGameSystem
         }
         catch (Exception e)
         {
-
             Debug.Log("无法连接到服务器，网络不通。"+e);
         }
     }
@@ -38,8 +37,11 @@ public class ClientSystem:IGameSystem
 
     private void ReceiveCallBack(IAsyncResult ar)
     {
+        Debug.Log("接收");
         try
         {
+            if (mClientSocket == null || mClientSocket.Connected == false) return;
+
             int count = mClientSocket.EndReceive(ar);
             mMsg.ReadMessage(count, OnProcessDataCallBack);
 
@@ -52,14 +54,16 @@ public class ClientSystem:IGameSystem
         }
     }
 
-    private void OnProcessDataCallBack(RequestCode resquestCode,string data)
+    private void OnProcessDataCallBack(ActionCode actionCode,string data)
     {
-        mFacade.HandleRequest(resquestCode, data);
+        Debug.Log("接收到的数据：" + data);
+        mMainFacade.HandleRequest(actionCode, data);
     }
 
     public void SendRequest(RequestCode requestCode,ActionCode actionCode,string data)
     {
         byte[] bytes = Message.PackDataRequestCode(requestCode, actionCode, data);
+        Debug.Log("发送数据：" + data);
         mClientSocket.Send(bytes);
     }
 

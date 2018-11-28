@@ -30,8 +30,6 @@ public class CampInfoUI:IBaseUI
     public override void Init()
     {
         base.Init();
-        GameObject canvas = GameObject.Find("Canvas");
-        mUIRoot = UnityTool.FindChildByName(canvas, "CampInfo");
 
         mCampIcon = UITools.FindChild<Image>(mUIRoot, "CampIcon");
         mCampName = UITools.FindChild<Text>(mUIRoot, "CampLab");

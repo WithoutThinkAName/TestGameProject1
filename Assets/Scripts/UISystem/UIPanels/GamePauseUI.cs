@@ -19,8 +19,7 @@ public class GamePauseUI:IBaseUI
     public override void Init()
     {
         base.Init();
-        GameObject canvas = GameObject.Find("Canvas");
-        mUIRoot = UnityTool.FindChildByName(canvas, "GamePauseUI");
+        
 
         mCurrentLevel = UITools.FindChild<Text>(mUIRoot, "CurrentLvLab2");
         mContinueBtn = UITools.FindChild<Button>(mUIRoot, "ContinueBtn");
@@ -52,7 +51,7 @@ public class GamePauseUI:IBaseUI
     /// </summary>
     public void GameOverBackMainMenu()
     {
-        GameFacade.Instance.SetIsGameOver(true);
+        GameStageFacade.Instance.SetIsGameOver(true);
     }
 
 }

@@ -27,7 +27,7 @@ public class Message
     /// 读取，数据解析
     /// 4(数据长度)+4(requestCode)+4(actionCode)+数据主体
     /// </summary>
-    public void ReadMessage(int newdataAmount, Action<RequestCode, string> processDataCallback)
+    public void ReadMessage(int newdataAmount, Action<ActionCode, string> processDataCallback)
     {
         startIndex += newdataAmount;
         while (true)
@@ -37,9 +37,10 @@ public class Message
             int count = BitConverter.ToInt32(data, 0);//int32只会读4字节
             if ((startIndex - 4) >= count)
             {
-                RequestCode requestCode = (RequestCode)BitConverter.ToInt32(data, 4);
+                ActionCode actionCode = (ActionCode)BitConverter.ToInt32(data, 4);
                 string s = Encoding.UTF8.GetString(data, 8, count - 4);
-                processDataCallback(requestCode, s);
+                
+                processDataCallback(actionCode, s);
                 Array.Copy(data, count + 4, data, 0, startIndex - count - 4);
                 startIndex -= count + 4;
             }
@@ -58,11 +59,11 @@ public class Message
         int dataAmount = requestCodeBytes.Length+ actionCodeBytes.Length + dataBytes.Length;
 
         byte[] dataAmountBytes = BitConverter.GetBytes(dataAmount);
-        dataAmountBytes.Concat(requestCodeBytes)
-                        .Concat(actionCodeBytes)
-                        .Concat(dataBytes);
+        return dataAmountBytes.Concat(requestCodeBytes).ToArray<byte>()
+                        .Concat(actionCodeBytes).ToArray<byte>()
+                        .Concat(dataBytes).ToArray<byte>();
 
-        return dataAmountBytes;
+       
     }
 
 }

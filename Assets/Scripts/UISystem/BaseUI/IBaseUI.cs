@@ -1,22 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
 /// 全部UI类的基本类
 /// </summary>
-public abstract class IBaseUI
+public abstract class IBaseUI:MonoBehaviour
 {
-    protected GameFacade mFacade;//中介者
-    public GameObject mUIRoot;//当前UI的根位置
+    protected GameMainFacade mMainfacade;//主中介者
+    protected GameStageFacade mFacade;//游戏中介者
+    protected UIManagerSystem mUIManager;//UI系统
+    public UIManagerSystem UIManager { set { mUIManager = value; } }
+    protected GameObject mUIRoot;//当前UI的根位置
     
     /// <summary>
     /// UI初始化方法
     /// </summary>
     public virtual void Init()
     {
-        mFacade = GameFacade.Instance;
+        mMainfacade = GameMainFacade.Instance;
+        mFacade = GameStageFacade.Instance;
+
+
+        mUIRoot=gameObject;
     }
     /// <summary>
     /// UI每帧运行方法
@@ -76,6 +80,13 @@ public abstract class IBaseUI
     protected void Hide()
     {
         mUIRoot.SetActive(false);
+    }
+    /// <summary>
+    /// 按钮点击声音
+    /// </summary>
+    protected void PlayClickSound()
+    {
+        mMainfacade.PlayNormalSound(AudioSystem.Sound_ButtonClick);
     }
 }
 

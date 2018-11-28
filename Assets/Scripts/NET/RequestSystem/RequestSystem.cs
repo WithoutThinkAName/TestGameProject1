@@ -6,39 +6,43 @@ using Common;
 
 public class RequestSystem:IGameSystem
 {
-    private Dictionary<RequestCode, BaseRequest> mRequestDict = new Dictionary<RequestCode, BaseRequest>();
 
+    private Dictionary<ActionCode, BaseRequest> mRequestDict = new Dictionary<ActionCode, BaseRequest>();
 
-
-
-    public void AddRequest(RequestCode requestCode, BaseRequest request)
+    public override void Init()
     {
-        mRequestDict.Add(requestCode, request);
+        base.Init();
     }
 
-    public void RemoveRequest(RequestCode requestCode)
+
+    public void AddRequest(ActionCode actionCode, BaseRequest request)
     {
-        if (mRequestDict.ContainsKey(requestCode)==false)
+        mRequestDict.Add(actionCode, request);
+    }
+
+    public void RemoveRequest(ActionCode actionCode)
+    {
+        if (mRequestDict.ContainsKey(actionCode)==false)
         {
-            Debug.Log("要删除的Request不存在：[" + requestCode + "]");
+            Debug.Log("要删除的Request不存在：[" + actionCode + "]");
             return;
         }
         else
         {
-            mRequestDict.Remove(requestCode);
+            mRequestDict.Remove(actionCode);
         }
         
     }
 
-    public void HandleRequest(RequestCode requestCode,string data)
+    public void HandleRequest(ActionCode actionCode, string data)
     {
-        BaseRequest request = mRequestDict.TryGet<RequestCode, BaseRequest>(requestCode);
+        BaseRequest request = mRequestDict.TryGet<ActionCode, BaseRequest>(actionCode);
         if (request == null)
         {
-            Debug.Log("无法取得Request：[" + requestCode + "]");
+            Debug.Log("无法取得ActionCode：[" + actionCode + "]");
             return;
         }
-        request.OnRequest(data);
+        request.OnResponse(data);
     }
 
 }

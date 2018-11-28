@@ -15,9 +15,17 @@ public class MainMenuState : ISceneState {
     /// </summary>
     public override void StateStart()
     {
-        GameObject.Find("StartButton").GetComponent<Button>().onClick.AddListener(OnStartButtonClick);
-        GameFacade.Instance.SetIsGameOver(false);
+        base.StateStart();
+        //GameObject.Find("StartButton").GetComponent<Button>().onClick.AddListener(OnStartButtonClick);
+        GameStageFacade.Instance.SetIsGameOver(false);
     }
+
+    public override void StateUpdate()
+    {
+        base.StateUpdate();
+        GameMainFacade.Instance.UpdateClient();
+    }
+
     /// <summary>
     /// 游戏开始按钮事件监听
     /// </summary>

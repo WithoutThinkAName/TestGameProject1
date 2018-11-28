@@ -5,17 +5,16 @@ using Common;
 
 
 /// <summary>
-/// 对外：外观模式
-/// 对内：中介者模式
+/// 游戏中介者
 /// </summary>
-public class GameFacade
+public class GameStageFacade
 {
-    private static GameFacade _instance = new GameFacade();//单例模式
+    private static GameStageFacade _instance = new GameStageFacade();//单例模式
     private bool mIsGaneOver = false;//游戏结束判断
     /// <summary>
     /// 获取中介者单例
     /// </summary>
-    public static GameFacade Instance { get { return _instance; } }
+    public static GameStageFacade Instance { get { return _instance; } }
     /// <summary>
     /// 获取游戏结束状态
     /// </summary>
@@ -24,9 +23,9 @@ public class GameFacade
     /// <summary>
     /// 私有构造
     /// </summary>
-    private GameFacade() { }
+    private GameStageFacade() { }
 
-    private AchievementSystem mAchievementSystem;//成就系统
+   
     private CampSystem mCampSystem;//兵营系统
     private CharacterSystem mCharacterSystem;//人物角色系统
     private EnergySystem mEnergySystem;//能量系统
@@ -44,13 +43,14 @@ public class GameFacade
     private GameStateInfoUI mGameStateInfoUI;//游戏状态信息UI面板
     private SoldierInfoUI mSoldierInfoUI;//士兵信息UI面板
 
+    
+
     /// <summary>
     /// 初始化
-    /// 载入备忘录数据并设置
     /// </summary>
-    public void Init()
+    public void InitStage()
     {
-        mAchievementSystem = new AchievementSystem();
+        
         mCampSystem = new CampSystem();
         mCharacterSystem = new CharacterSystem();
         mEnergySystem = new EnergySystem();
@@ -58,19 +58,13 @@ public class GameFacade
         mStageSystem = new StageSystem();
         mHeartSystem = new HeartSystem();
         mScreenSystem = new ScreenSystem();
-        mUIManagerSystem = new UIManagerSystem();
-
-        mClientSystem = new ClientSystem();
-        mRequestSystem = new RequestSystem();
-
-
 
         mCampInfoUI = new CampInfoUI();
         mGamePauseUI = new GamePauseUI();
         mGameStateInfoUI = new GameStateInfoUI();
         mSoldierInfoUI = new SoldierInfoUI();
 
-        mAchievementSystem.Init();
+       
         mCampSystem.Init();
         mCharacterSystem.Init();
         mEnergySystem.Init();
@@ -80,22 +74,19 @@ public class GameFacade
         mScreenSystem.Init();
         mUIManagerSystem.Init();
 
-        mClientSystem.Init();
-        mRequestSystem.Init();
 
         mCampInfoUI.Init();
         mGamePauseUI.Init();
         mGameStateInfoUI.Init();
         mSoldierInfoUI.Init();
 
-        LoadMemento();
+        
     }
     /// <summary>
     /// 每帧运行
     /// </summary>
-    public void Update()
+    public void UpdateStage()
     {
-        mAchievementSystem.Update();
         mCampSystem.Update();
         mCharacterSystem.Update();
         mEnergySystem.Update();
@@ -103,10 +94,6 @@ public class GameFacade
         mStageSystem.Update();
         mHeartSystem.Update();
         mScreenSystem.Update();
-        mUIManagerSystem.Update();
-
-        mClientSystem.Update();
-        mRequestSystem.Update();
 
         mCampInfoUI.Update();
         mGamePauseUI.Update();
@@ -115,11 +102,9 @@ public class GameFacade
     }
     /// <summary>
     /// 释放
-    /// 根据当前数据生成备忘录并存储
     /// </summary>
-    public void Release()
+    public void ReleaseStage()
     {
-        mAchievementSystem.Release();
         mCampSystem.Release();
         mCharacterSystem.Release();
         mEnergySystem.Release();
@@ -127,17 +112,13 @@ public class GameFacade
         mStageSystem.Release();
         mHeartSystem.Release();
         mScreenSystem.Release();
-        mUIManagerSystem.Release();
-
-        mClientSystem.Release();
-        mRequestSystem.Release();
 
         mCampInfoUI.Release();
         mGamePauseUI.Release();
         mGameStateInfoUI.Release();
         mSoldierInfoUI.Release();
 
-        CreateMemento();
+       
     }
     /// <summary>
     /// 获取敌人目标到达位置
@@ -287,23 +268,7 @@ public class GameFacade
     {
         mGameEventSystem.NotifySubject(et);
     }
-    /// <summary>
-    /// 读取并设置备忘录
-    /// </summary>
-    public void LoadMemento()
-    {
-        AchievementMemento memento = new AchievementMemento();
-        memento.LoadData();
-        mAchievementSystem.SetMemento(memento);
-    }
-    /// <summary>
-    /// 创建并存储备忘录
-    /// </summary>
-    public void CreateMemento()
-    {
-        AchievementMemento memento= mAchievementSystem.CreateMemento();
-        memento.SaveData();
-    }
+    
     /// <summary>
     /// 运行访问者
     /// </summary>
@@ -320,13 +285,5 @@ public class GameFacade
     {
         mIsGaneOver = isGameover;
     }
-    /// <summary>
-    /// 处理客户端请求
-    /// </summary>
-    /// <param name="requestCode"></param>
-    /// <param name="data"></param>
-    public void HandleRequest(RequestCode requestCode, string data)
-    {
-        mRequestSystem.HandleRequest(requestCode, data);
-    }
+   
 }

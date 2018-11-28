@@ -13,6 +13,8 @@ public interface IAssetFactory
     GameObject LoadWeapon(string name);
     GameObject LoadEffect(string name);
     AudioClip LoadAudioClip(string name);
+    AudioClip LoadSoundClip(string name);
     Sprite LoadSprite(string name);
+    Dictionary<UIPanelType, string> ParseUIPanelTypeJson();
 }
 

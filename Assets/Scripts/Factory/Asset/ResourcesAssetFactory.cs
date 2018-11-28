@@ -14,7 +14,9 @@ public class ResourcesAssetFactory : IAssetFactory
     public const string WeaponPath = "Weapons/";
     public const string EffectPath = "Effects/";
     public const string AudioPath = "Audios/";
+    public const string SoundPath = "Sounds/";
     public const string SpritePath = "Sprites/";
+    public const string JsonPath = "Json/";
 
     /// <summary>
     /// 声音加载
@@ -102,5 +104,28 @@ public class ResourcesAssetFactory : IAssetFactory
         return o;
     }
 
+    /// <summary>
+    /// UITypeJson加载
+    /// </summary>
+    /// <returns></returns>
+    public Dictionary<UIPanelType, string> ParseUIPanelTypeJson()
+    {
+        Dictionary<UIPanelType, string> panelPathDict = new Dictionary<UIPanelType, string>();
+
+        TextAsset ta = Resources.Load<TextAsset>(JsonPath+"UIPanelType");
+
+        UIPanelTypeJson jsonObject = JsonUtility.FromJson<UIPanelTypeJson>(ta.text);
+
+        foreach (UIPanelInfo info in jsonObject.infoList)
+        {
+            panelPathDict.Add(info.panelType, info.path);
+        }
+        return panelPathDict;
+    }
+
+    public AudioClip LoadSoundClip(string name)
+    {
+        return Resources.Load(SoundPath + name, typeof(AudioClip)) as AudioClip;
+    }
 }
 

@@ -6,12 +6,25 @@ using UnityEngine;
 
 public class LoginAndRegistrationState : ISceneState
 {
-    public LoginAndRegistrationState(string sceneName, SceneStateController controller) : base(sceneName, controller) { }
+    public LoginAndRegistrationState(SceneStateController controller) : base("02LoginAndRegistrationScene", controller) { }
 
 
+    public override void StateStart()
+    {
+        GameMainFacade.Instance.InitClient();
+    }
+
+    public override void StateEnd()
+    {
+        base.StateEnd();
 
 
-
+    }
+    public override void StateUpdate()
+    {
+        base.StateUpdate();
+        GameMainFacade.Instance.UpdateClient();
+    }
 
 }
 

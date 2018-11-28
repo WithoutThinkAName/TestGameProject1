@@ -13,24 +13,28 @@ public class BattleState : ISceneState {
     /// </summary>
     public override void StateStart()
     {
-        GameFacade.Instance.Init();
+        base.StateStart();
+        GameStageFacade.Instance.InitStage();
     }
     /// <summary>
     /// 释放游戏关卡
     /// </summary>
     public override void StateEnd()
     {
-        GameFacade.Instance.Release();
+        base.StateEnd();
+        GameStageFacade.Instance.ReleaseStage();
     }
     /// <summary>
     /// 战斗关卡状态运行
     /// </summary>
     public override void StateUpdate()
     {
-        if (GameFacade.Instance.isGameOver==true)
+        base.StateUpdate();
+        if (GameStageFacade.Instance.isGameOver==true)
         {
+            StateEnd();
             mController.SetState(new MainMenuState(mController));
         }
-        GameFacade.Instance.Update();
+        GameStageFacade.Instance.UpdateStage();
     }
 }

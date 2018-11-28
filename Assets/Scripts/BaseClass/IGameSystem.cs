@@ -7,13 +7,16 @@ using UnityEngine;
 /// </summary>
 public abstract class IGameSystem
 {
-    protected GameFacade mFacade;//全系统中介者
+    protected GameMainFacade mMainFacade;//主中介者
+    protected GameStageFacade mFacade;//游戏中介者
+
     /// <summary>
     /// 系统初始化方法
     /// </summary>
     public virtual void Init()
     {
-        mFacade = GameFacade.Instance;//中介者初始化
+        mMainFacade = GameMainFacade.Instance;//中介者初始化
+        mFacade = GameStageFacade.Instance;
     }
     /// <summary>
     /// 系统每帧运行方法
