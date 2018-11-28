@@ -10,11 +10,13 @@ using UnityEngine;
 public class DestoryForTime:MonoBehaviour
 {
     private float time = 1;//销毁时间
+
     /// <summary>
-    /// 初始化
+    /// 初始化销毁
     /// </summary>
-    void Awake()
+    public void SetDestory(float timer)
     {
+        time = timer;
         Invoke("Destory", time);
     }
     /// <summary>
