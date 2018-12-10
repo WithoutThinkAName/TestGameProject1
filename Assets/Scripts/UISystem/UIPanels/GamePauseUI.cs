@@ -51,7 +51,8 @@ public class GamePauseUI:IBaseUI
     /// </summary>
     public void GameOverBackMainMenu()
     {
-        GameStageFacade.Instance.SetIsGameOver(true);
+        Time.timeScale = 1;
+        GameMode1Facade.Instance.SetIsGameOver(true);
     }
 
 }

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
@@ -27,7 +24,7 @@ public class MessageUI:IBaseUI
     /// </summary>
     public override void OnEnter()
     {
-        base.OnEnter();       
+        base.OnEnter();
         
     }
     /// <summary>

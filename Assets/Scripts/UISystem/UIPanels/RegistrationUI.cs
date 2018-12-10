@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using Common;
+using DG.Tweening;
 
 
 public class RegistrationUI:IBaseUI
@@ -13,7 +11,6 @@ public class RegistrationUI:IBaseUI
     private InputField mReUserPasswordInput;
     private Button mRegistrationBtn;
     private Button mCloseBtn;
-    private Animator mAnim;
 
     private RegistrationRequest mRegistrationRequest;
     /// <summary>
@@ -28,7 +25,6 @@ public class RegistrationUI:IBaseUI
         mReUserPasswordInput = UITools.FindChild<InputField>(mUIRoot, "RePasswordInput");
         mRegistrationBtn = UITools.FindChild<Button>(mUIRoot, "RegistrationBtn2");
         mCloseBtn = UITools.FindChild<Button>(mUIRoot, "CloseBtn");
-        mAnim = GetComponent<Animator>();
         
         mRegistrationBtn.onClick.AddListener(RegistrationBtnOnClick);
         mCloseBtn.onClick.AddListener(CloseBtnOnClick);
@@ -42,13 +38,21 @@ public class RegistrationUI:IBaseUI
     public override void OnEnter()
     {
         base.OnEnter();
-
+        EnterAnim();
         mUserNameInput.text = "";
         mUserPasswordInput.text = "";
         mReUserPasswordInput.text = "";
 
         mUIRoot.SetActive(true);
-        mAnim.Play("PanelAppear");
+    }
+    /// <summary>
+    /// UI出现动画
+    /// </summary>
+    private void EnterAnim()
+    {
+        thisPanel.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+
+        thisPanel.DOScale(1f, 0.2f);
     }
     /// <summary>
     /// 窗口关闭前执行
@@ -56,11 +60,16 @@ public class RegistrationUI:IBaseUI
     public override void OnExit()
     {
         base.OnExit();
-        //mAnim.Play("PanelDisappear");
-        //Invoke("Hide", 0.3f);
-        Hide();
+        HideAnim();
     }
-
+    /// <summary>
+    /// UI关闭动画
+    /// </summary>
+    private void HideAnim()
+    {
+        thisPanel.localScale = Vector3.one;
+        thisPanel.DOScale(0.1f, 0.2f).OnComplete(() => base.OnExit());
+    }
 
     /// <summary>
     /// 注册按钮事件

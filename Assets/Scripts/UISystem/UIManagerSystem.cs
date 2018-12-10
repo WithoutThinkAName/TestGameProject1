@@ -25,13 +25,20 @@ public class UIManagerSystem:IGameSystem
     private Dictionary<UIPanelType, IBaseUI> panelDict;//保存所有实例化面板的游戏物体身上的IBaseUI组件
     private Stack<IBaseUI> panelStack;
 
+    private LoadingUI mLoadingUI=null;
+
     private string mMsgAsyn = null;
+
+    private bool IsSingleMode = false;
 
     public override void Init()
     {
         base.Init();
         ParseUIPanelTypeJson();
-        InitLoginStageUI();
+        panelDict = new Dictionary<UIPanelType, IBaseUI>();
+        panelStack = new Stack<IBaseUI>();
+
+        UnityTool.Attach(GameObject.Find("GameLoop"), CanvasTransform.gameObject);
     }
     /// <summary>
     /// 加载Json
@@ -40,22 +47,7 @@ public class UIManagerSystem:IGameSystem
     {
         panelPathDict = GameMainFacade.Instance.ParseUIPanelTypeJson();
     }
-    /// <summary>
-    /// 初始化登录面板
-    /// </summary>
-    public void InitLoginStageUI()
-    {
-        PushPanel(UIPanelType.LoginBackgroundUI);
-    }
-    /// <summary>
-    /// 初始化主菜单面板UI
-    /// </summary>
-    public void InitMainMenuUI()
-    {
-        ClearPanel();
-        PushPanel(UIPanelType.MainMenuUI);
-    }
-
+    
     public override void Update()
     {
         base.Update();
@@ -64,8 +56,22 @@ public class UIManagerSystem:IGameSystem
             ShowMessageUI(mMsgAsyn);
             mMsgAsyn = null;
         }
-    }
 
+
+        if (panelStack.Count > 0)
+        {
+            foreach (IBaseUI panel in panelStack)
+            {
+                panel.Update();
+            }
+        }
+
+
+    }
+    /// <summary>
+    /// 异步消息UI显示
+    /// </summary>
+    /// <param name="message"></param>
     public void ShowMessageUIAsyn(string message)
     {
         mMsgAsyn = message;
@@ -77,25 +83,32 @@ public class UIManagerSystem:IGameSystem
     /// <param name="message"></param>
     public void ShowMessageUI(string message)
     {
-        if (panelStack == null)
-            panelStack = new Stack<IBaseUI>();
-
         MessageUI panel =(MessageUI) GetPanel(UIPanelType.MessageUI);
         
         panel.OnEnter();
         panel.SetMessage(message);
     }
-
-
-
     /// <summary>
-    /// 把某个页面入栈，  把某个页面显示在界面上
+    /// 显示载入UI
+    /// </summary>
+    public LoadingUI ShowLoadingUI()
+    {
+        if (mLoadingUI==null)
+        {
+            mLoadingUI = (LoadingUI)GetPanel(UIPanelType.LoadingUI);
+        }
+
+        mLoadingUI.OnEnter();
+        panelStack.Push(mLoadingUI);
+
+        return mLoadingUI;
+    }
+   
+    /// <summary>
+    /// 把某个页面入栈，把某个页面显示在界面上
     /// </summary>
     public void PushPanel(UIPanelType panelType)
     {
-        if (panelStack == null)
-            panelStack = new Stack<IBaseUI>();
-
         //判断一下栈里面是否有页面
         if (panelStack.Count > 0)
         {
@@ -111,10 +124,7 @@ public class UIManagerSystem:IGameSystem
     /// 出栈 ，把页面从界面上移除
     /// </summary>
     public void PopPanel()
-    {       
-        if (panelStack == null)
-            panelStack = new Stack<IBaseUI>();
-
+    { 
         if (panelStack.Count <= 0) return;
 
         //关闭栈顶页面的显示
@@ -132,20 +142,14 @@ public class UIManagerSystem:IGameSystem
     /// </summary>
     public void ClearPanel()
     {
-        panelDict.Clear();
-
-        if (panelStack == null)
-            panelStack = new Stack<IBaseUI>();
-
         if (panelStack.Count <= 0) return;
 
-        while (true)
+        while (panelStack.Count > 0)
         {
             //关闭栈顶页面的显示
             IBaseUI topPanel = panelStack.Pop();
             topPanel.OnExit();
-
-            if (panelStack.Count <= 0) break;
+            
         }
        
     }
@@ -161,10 +165,7 @@ public class UIManagerSystem:IGameSystem
         {
             panelDict = new Dictionary<UIPanelType, IBaseUI>();
         }
-
-        //IBaseUI panel;
-        //panelDict.TryGetValue(panelType, out panel);//TODO
-
+        
         IBaseUI panel = panelDict.TryGet(panelType);
 
         if (panel == null)
@@ -184,9 +185,6 @@ public class UIManagerSystem:IGameSystem
         {
             return panel;
         }
-
-    }
-    
-    
+    }    
 }
 

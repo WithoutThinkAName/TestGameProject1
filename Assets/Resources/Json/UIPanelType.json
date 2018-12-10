@@ -4,6 +4,9 @@
 {"panelTypeString":"MessageUI",
 "path":"UIPanel/Message"},
 
+{"panelTypeString":"LoadingUI",
+"path":"UIPanel/LoadingPanel"},
+
 {"panelTypeString":"LoginBackgroundUI",
 "path":"UIPanel/LoginBackgroundPanel"},
 
@@ -11,7 +14,20 @@
 "path":"UIPanel/LoginPanel"},
 
 {"panelTypeString":"RegistrationUI",
-"path":"UIPanel/RegistrationPanel"}
+"path":"UIPanel/RegistrationPanel"},
+
+{"panelTypeString":"MainMenuUI",
+"path":"UIPanel/MainMemuPanel"},
+
+{"panelTypeString":"GameMode1UI",
+"path":"UIPanel/GameMode1Panel"},
+
+{"panelTypeString":"GamePauseUI",
+"path":"UIPanel/GamePausePanel"},
+
+{"panelTypeString":"GameOverUI",
+"path":"UIPanel/GameOverPanel"}
+
 
 
 

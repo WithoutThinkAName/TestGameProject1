@@ -1,15 +1,16 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using Common;
+using DG.Tweening;
 
 public class LoginUI:IBaseUI
 {
+
     private InputField mUserNameInput;
     private InputField mUserPasswordInput;
     private Button mLoginBtn;
     private Button mRegistrationBtn;
     private Button mCloseBtn;
-    private Animator mAnim;
 
     private LoginRequest mLoginRequest;
 
@@ -25,7 +26,7 @@ public class LoginUI:IBaseUI
         mLoginBtn = UITools.FindChild<Button>(mUIRoot, "LoginBtn2");
         mRegistrationBtn = UITools.FindChild<Button>(mUIRoot, "RegistrationBtn1.5");
         mCloseBtn = UITools.FindChild<Button>(mUIRoot, "CloseBtn");
-        mAnim = GetComponent<Animator>();
+       
 
         mLoginBtn.onClick.AddListener(LoginBtnOnClick);
         mRegistrationBtn.onClick.AddListener(RegistrationBtnOnClick);
@@ -33,6 +34,7 @@ public class LoginUI:IBaseUI
 
         mLoginRequest = GetComponent<LoginRequest>();
 
+        gameObject.SetActive(false);
     }
 
     /// <summary>
@@ -41,23 +43,39 @@ public class LoginUI:IBaseUI
     public override void OnEnter()
     {
         base.OnEnter();
+        EnterAnim();
 
         mUserNameInput.text = "";
         mUserPasswordInput.text = "";
-
-        mUIRoot.SetActive(true);
-        mAnim.Play("PanelAppear");
+        
+       
 
     }
+    /// <summary>
+    /// UI出现动画
+    /// </summary>
+    private void EnterAnim()
+    {
+        thisPanel.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+
+        thisPanel.DOScale(1f, 0.2f);
+    }
+
     /// <summary>
     /// 窗口关闭前执行
     /// </summary>
     public override void OnExit()
     {
-        base.OnExit();
-        Hide();
+        HideAnim();
     }
-
+    /// <summary>
+    /// UI关闭动画
+    /// </summary>
+    private void HideAnim()
+    {
+        thisPanel.localScale = Vector3.one;
+        thisPanel.DOScale(0.1f, 0.2f).OnComplete(() => base.OnExit());
+    }
     
     /// <summary>
     /// 登录按钮执行
@@ -84,12 +102,12 @@ public class LoginUI:IBaseUI
     }
 
     public void OnLoginResponse(ReturnCode returnCode)
-    {
-        PlayClickSound();
+    {        
         Debug.Log(returnCode);
         if (returnCode==ReturnCode.Success)
         {
             mUIManager.ShowMessageUIAsyn("登录成功");
+
         }
         else
         {

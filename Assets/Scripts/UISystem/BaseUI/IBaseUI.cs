@@ -6,21 +6,22 @@
 public abstract class IBaseUI:MonoBehaviour
 {
     protected GameMainFacade mMainfacade;//主中介者
-    protected GameStageFacade mFacade;//游戏中介者
+    protected GameMode1Facade mMode1Facade;//游戏中介者
     protected UIManagerSystem mUIManager;//UI系统
     public UIManagerSystem UIManager { set { mUIManager = value; } }
     protected GameObject mUIRoot;//当前UI的根位置
-    
+    protected RectTransform thisPanel;
     /// <summary>
     /// UI初始化方法
     /// </summary>
     public virtual void Init()
     {
         mMainfacade = GameMainFacade.Instance;
-        mFacade = GameStageFacade.Instance;
+        mMode1Facade = GameMode1Facade.Instance;
 
 
         mUIRoot=gameObject;
+        thisPanel = GetComponent<RectTransform>();
     }
     /// <summary>
     /// UI每帧运行方法
@@ -29,14 +30,18 @@ public abstract class IBaseUI:MonoBehaviour
     /// <summary>
     /// UI释放方法
     /// </summary>
-    public virtual void Release() { }
+    public virtual void Release()
+    {
+        Destroy(gameObject);
+    }
 
     /// <summary>
     /// 界面被显示出来
     /// </summary>
     public virtual void OnEnter()
     {
-
+        thisPanel.SetAsLastSibling();
+        Show();
     }
 
     /// <summary>
@@ -60,7 +65,7 @@ public abstract class IBaseUI:MonoBehaviour
     /// </summary>
     public virtual void OnExit()
     {
-
+        Hide();
     }
 
 

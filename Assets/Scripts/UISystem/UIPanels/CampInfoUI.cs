@@ -122,13 +122,13 @@ public class CampInfoUI:IBaseUI
     {
         //判断能量
         int energy = mCamp.energyCostTrain;
-        if (mFacade.TakeEnergy(energy))
+        if (mMode1Facade.TakeEnergy(energy))
         {
             mCamp.Train();
         }
         else
         {
-            mFacade.ShowMsg("能量不足，需要" + energy + "点能量训练新士兵");
+            mMainfacade.ShowMessageUI("能量不足，需要" + energy + "点能量训练新士兵");
         }
     }
     /// <summary>
@@ -137,7 +137,7 @@ public class CampInfoUI:IBaseUI
     public void OnCancelTrainClick()
     {
         //回收能量
-        mFacade.RecycleEnergy(mCamp.energyCostTrain);
+        mMode1Facade.RecycleEnergy(mCamp.energyCostTrain);
         //取消训练
         mCamp.CancelATrainCommand();
     }
@@ -149,18 +149,18 @@ public class CampInfoUI:IBaseUI
         int energy = mCamp.energyCostCampUpgrade;
         if (energy<0)
         {
-            mFacade.ShowMsg("无法升级兵营，等级最大");
+            mMainfacade.ShowMessageUI("无法升级兵营，等级最大");
             return;
         }
-        if (mFacade.TakeEnergy(energy))
+        if (mMode1Facade.TakeEnergy(energy))
         {
             mCamp.UpgradeCamp();
             ShowCampInfo(mCamp);
         }
         else
         {
-            mFacade.ShowMsg("能量不足，需要"+energy+"点能量升级兵营");
-        }     
+            mMainfacade.ShowMessageUI("能量不足，需要" + energy + "点能量升级兵营");
+        }
     }
     /// <summary>
     /// 武器升级按钮事件
@@ -170,17 +170,17 @@ public class CampInfoUI:IBaseUI
         int energy = mCamp.energyCostWeaponUpgrade;
         if (energy<0)
         {
-            mFacade.ShowMsg("无法升级武器，等级最大");
+            mMainfacade.ShowMessageUI("无法升级武器，等级最大");
             return;
         }
-        if (mFacade.TakeEnergy(energy))
+        if (mMode1Facade.TakeEnergy(energy))
         {
             mCamp.UpgradeWeapon();
             ShowCampInfo(mCamp);
         }
         else
         {
-            mFacade.ShowMsg("能量不足，需要" + energy + "点能量升级武器");
+            mMainfacade.ShowMessageUI("能量不足，需要" + energy + "点能量升级武器");
         }
     }
 }
