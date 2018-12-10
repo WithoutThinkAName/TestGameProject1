@@ -94,7 +94,7 @@ public abstract class ISoldier : ICharacter
     public override void Killed()
     {
         base.Killed();
-        GameStageFacade.Instance.NotifySubject(GameEventType.SoldierKilled);
+        GameMode1Facade.Instance.NotifySubject(GameEventType.SoldierKilled);
     }
     /// <summary>
     /// 访问者

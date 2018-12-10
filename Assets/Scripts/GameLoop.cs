@@ -21,6 +21,7 @@ public class GameLoop : MonoBehaviour {
     /// 初始化控制器并进入开始场景状态
     /// </summary>
 	void Start () {
+        GameMainFacade.Instance.InitClient();
         controller = new SceneStateController();
         controller.SetState(new StartState(controller),false);
 	}
@@ -29,7 +30,7 @@ public class GameLoop : MonoBehaviour {
     /// 每帧运行游戏
     /// </summary>
 	void Update () {
-        controller.StatUpdate();
+        controller.StateUpdate();
         
     }
 }

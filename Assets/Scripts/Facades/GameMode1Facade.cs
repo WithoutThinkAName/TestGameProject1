@@ -7,14 +7,14 @@ using Common;
 /// <summary>
 /// 游戏中介者
 /// </summary>
-public class GameStageFacade
+public class GameMode1Facade
 {
-    private static GameStageFacade _instance = new GameStageFacade();//单例模式
+    private static GameMode1Facade _instance = new GameMode1Facade();//单例模式
     private bool mIsGaneOver = false;//游戏结束判断
     /// <summary>
     /// 获取中介者单例
     /// </summary>
-    public static GameStageFacade Instance { get { return _instance; } }
+    public static GameMode1Facade Instance { get { return _instance; } }
     /// <summary>
     /// 获取游戏结束状态
     /// </summary>
@@ -23,7 +23,7 @@ public class GameStageFacade
     /// <summary>
     /// 私有构造
     /// </summary>
-    private GameStageFacade() { }
+    private GameMode1Facade() { }
 
    
     private CampSystem mCampSystem;//兵营系统
@@ -33,15 +33,6 @@ public class GameStageFacade
     private StageSystem mStageSystem;//关卡系统
     private HeartSystem mHeartSystem;//关卡生命值系统（心）
     private ScreenSystem mScreenSystem;//屏幕系统
-    private UIManagerSystem mUIManagerSystem;//UI管理系统
-
-    private ClientSystem mClientSystem;//客户端系统
-    private RequestSystem mRequestSystem;//请求处理系统
-
-    private CampInfoUI mCampInfoUI;//兵营UI面板
-    private GamePauseUI mGamePauseUI;//游戏暂停UI面板
-    private GameStateInfoUI mGameStateInfoUI;//游戏状态信息UI面板
-    private SoldierInfoUI mSoldierInfoUI;//士兵信息UI面板
 
     
 
@@ -59,11 +50,6 @@ public class GameStageFacade
         mHeartSystem = new HeartSystem();
         mScreenSystem = new ScreenSystem();
 
-        mCampInfoUI = new CampInfoUI();
-        mGamePauseUI = new GamePauseUI();
-        mGameStateInfoUI = new GameStateInfoUI();
-        mSoldierInfoUI = new SoldierInfoUI();
-
        
         mCampSystem.Init();
         mCharacterSystem.Init();
@@ -72,14 +58,8 @@ public class GameStageFacade
         mStageSystem.Init();
         mHeartSystem.Init();
         mScreenSystem.Init();
-        mUIManagerSystem.Init();
-
-
-        mCampInfoUI.Init();
-        mGamePauseUI.Init();
-        mGameStateInfoUI.Init();
-        mSoldierInfoUI.Init();
-
+        
+     
         
     }
     /// <summary>
@@ -95,10 +75,6 @@ public class GameStageFacade
         mHeartSystem.Update();
         mScreenSystem.Update();
 
-        mCampInfoUI.Update();
-        mGamePauseUI.Update();
-        mGameStateInfoUI.Update();
-        mSoldierInfoUI.Update();
     }
     /// <summary>
     /// 释放
@@ -113,12 +89,7 @@ public class GameStageFacade
         mHeartSystem.Release();
         mScreenSystem.Release();
 
-        mCampInfoUI.Release();
-        mGamePauseUI.Release();
-        mGameStateInfoUI.Release();
-        mSoldierInfoUI.Release();
-
-       
+        
     }
     /// <summary>
     /// 获取敌人目标到达位置
@@ -138,30 +109,6 @@ public class GameStageFacade
         return mCampSystem.FindSoldierCampByCampType(soldierType);
     }
     /// <summary>
-    /// 显示兵营信息UI
-    /// </summary>
-    /// <param name="camp"></param>
-    public void ShowCampInfo(ICamp camp)
-    {
-        mSoldierInfoUI.HideSoldierInfo();
-        mCampInfoUI.ShowCampInfo(camp);
-    }
-    /// <summary>
-    /// 显示士兵信息UI
-    /// </summary>
-    /// <param name="soldier"></param>
-    public void ShowSoldierInfo(ISoldier soldier)
-    {
-        mSoldierInfoUI.ShowSoldierInfo(soldier);
-    }
-    /// <summary>
-    /// 显示游戏暂停UI
-    /// </summary>
-    public void ShowGamePauseUI()
-    {
-        mGamePauseUI.ShowGamePauseUI();
-    }
-    /// <summary>
     /// 人物系统添加士兵对象
     /// </summary>
     /// <param name="soldier"></param>
@@ -177,6 +124,15 @@ public class GameStageFacade
     {
         mCharacterSystem.AddEnemy(enemy);
     }
+    /// <summary>
+    /// 运行访问者
+    /// </summary>
+    /// <param name="visitor"></param>
+    public void RunVisitor(ICharacterVisitor visitor)
+    {
+        mCharacterSystem.RunVisitor(visitor);
+    }
+
     /// <summary>
     /// 能量消耗
     /// </summary>
@@ -194,31 +150,24 @@ public class GameStageFacade
     {
         mEnergySystem.RecycleEnergy(value);
     }
-    /// <summary>
-    /// 显示提示信息
-    /// </summary>
-    /// <param name="msg"></param>
-    public void ShowMsg(string msg)
-    {
-        mGameStateInfoUI.ShowMsg(msg);
-    }
-    /// <summary>
-    /// 更新能量条数据
-    /// </summary>
-    /// <param name="nowEnergy"></param>
-    /// <param name="maxEnergy"></param>
-    public void UpgradeEnergySlider(int nowEnergy, int maxEnergy)
-    {
-        mGameStateInfoUI.UpdateEnergySlider(nowEnergy, maxEnergy);
-    }
-    /// <summary>
-    /// 更新当前关卡数
-    /// </summary>
-    /// <param name="lv"></param>
-    public void UpgradeStageLv(int lv)
-    {
-        mGameStateInfoUI.UpdateStageLv(lv);
-    }
+    
+    ///// <summary>
+    ///// 更新能量条数据
+    ///// </summary>
+    ///// <param name="nowEnergy"></param>
+    ///// <param name="maxEnergy"></param>
+    //public void UpgradeEnergySlider(int nowEnergy, int maxEnergy)
+    //{
+    //    mGameStateInfoUI.UpdateEnergySlider(nowEnergy, maxEnergy);
+    //}
+    ///// <summary>
+    ///// 更新当前关卡数
+    ///// </summary>
+    ///// <param name="lv"></param>
+    //public void UpgradeStageLv(int lv)
+    //{
+    //    mGameStateInfoUI.UpdateStageLv(lv);
+    //}
     /// <summary>
     /// 关卡生命值减少
     /// </summary>
@@ -226,22 +175,15 @@ public class GameStageFacade
     {
         mHeartSystem.ReduceHeart();
     }
-    /// <summary>
-    /// 显示游戏结束UI
-    /// </summary>
-    /// <param name="gameOverInfo"></param>
-    public void ShowGameOverUI(string gameOverInfo)
-    {
-        mGameStateInfoUI.ShowGameOverUI(gameOverInfo);
-    }
-    /// <summary>
-    /// 更新关卡生命值
-    /// </summary>
-    /// <param name="heartCount"></param>
-    public void UpdateHeartCount(int heartCount)
-    {
-        mGameStateInfoUI.UpdateHeartCount(heartCount);
-    }
+   
+    ///// <summary>
+    ///// 更新关卡生命值
+    ///// </summary>
+    ///// <param name="heartCount"></param>
+    //public void UpdateHeartCount(int heartCount)
+    //{
+    //    mGameStateInfoUI.UpdateHeartCount(heartCount);
+    //}
     /// <summary>
     /// 根据事件类型，注册观察者
     /// </summary>
@@ -269,14 +211,7 @@ public class GameStageFacade
         mGameEventSystem.NotifySubject(et);
     }
     
-    /// <summary>
-    /// 运行访问者
-    /// </summary>
-    /// <param name="visitor"></param>
-    public void RunVisitor(ICharacterVisitor visitor)
-    {
-        mCharacterSystem.RunVisitor(visitor);
-    }
+   
     /// <summary>
     /// 关卡状态设置
     /// </summary>

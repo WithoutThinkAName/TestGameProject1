@@ -10,6 +10,14 @@ public class CharacterSystem : IGameSystem
     private List<ICharacter> mEnemys = new List<ICharacter>();//敌人列表
     private List<ICharacter> mSoldiers = new List<ICharacter>();//士兵列表
 
+    private bool mIsClearCHaracters;
+
+    public override void Init()
+    {
+        base.Init();
+        mIsClearCHaracters = false;
+    }
+
     /// <summary>
     /// 添加敌人
     /// </summary>
@@ -47,6 +55,11 @@ public class CharacterSystem : IGameSystem
     /// </summary>
     public override void Update()
     {
+        if (mIsClearCHaracters == true)
+        {
+            ClearAllCharacters();
+            return;
+        }
         RemoveCharacterIsKilled(mEnemys);
         RemoveCharacterIsKilled(mSoldiers);
 
@@ -73,6 +86,28 @@ public class CharacterSystem : IGameSystem
         {
             s.Update();
             s.UpdateFSMAI(mEnemys);
+        }
+    }
+
+    public override void Release()
+    {
+        base.Release();
+        mIsClearCHaracters = true;        
+    }
+    /// <summary>
+    /// 清理所有人物对象
+    /// </summary>
+    private void ClearAllCharacters()
+    {
+        while (mEnemys.Count>0)
+        {
+            mEnemys[0].Release();
+            mEnemys.Remove(mEnemys[0]);
+        }
+        while (mSoldiers.Count > 0)
+        {
+            mSoldiers[0].Release();
+            mSoldiers.Remove(mSoldiers[0]);
         }
     }
     /// <summary>

@@ -10,6 +10,7 @@ public class ISceneState
 {
     private string mSceneName;//场景名称
     protected SceneStateController mController;//场景控制器
+    protected GameMainFacade mMainFacade;
 
     /// <summary>
     /// 初始化
@@ -20,6 +21,7 @@ public class ISceneState
     {
         mSceneName = sceneName;
         mController = controller;
+        mMainFacade = GameMainFacade.Instance;
     }
     /// <summary>
     /// 获取场景名称
@@ -28,14 +30,23 @@ public class ISceneState
     /// <summary>
     /// 新场景加载完成优先执行项
     /// </summary>
-    public virtual void StateStart() { }
+    public virtual void StateStart()
+    {
+        mMainFacade.CleanAllUIPanel();
+    }
     /// <summary>
     /// 场景结束切换前，最后必须执行项
     /// </summary>
-    public virtual void StateEnd() { }
+    public virtual void StateEnd()
+    {
+        mMainFacade.CleanAllUIPanel();
+    }
     /// <summary>
     /// 场景每帧运行
     /// </summary>
-    public virtual void StateUpdate() { }
+    public virtual void StateUpdate()
+    {
+        mMainFacade.UpdateClient();
+    }
 }
 

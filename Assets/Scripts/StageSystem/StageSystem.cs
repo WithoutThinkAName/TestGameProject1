@@ -111,14 +111,14 @@ public class StageSystem : IGameSystem
         mLv++;
         //Debug.Log("新关卡" + mLv);
         mFacade.NotifySubject(GameEventType.NewStage);
-        mFacade.UpgradeStageLv(mLv);
+        //mFacade.UpgradeStageLv(mLv);
     }
     /// <summary>
     /// 游戏通关结束提示
     /// </summary>
     public void StageClear()
     {
-        mFacade.ShowGameOverUI("恭喜通关！");
+        //mFacade.ShowGameOverUI("恭喜通关！");
     }
 }
 

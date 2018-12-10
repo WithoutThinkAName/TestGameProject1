@@ -13,6 +13,26 @@ public class SceneStateController
     private ISceneState mState;//当前状态场景
     private AsyncOperation mAO;//场景加载
 
+    private LoadingUI mLoadingUI;
+    private float mLoadingProgress;
+
+    private bool isSetState = false;
+    private ISceneState stateWaitForLoad=null;
+
+    public SceneStateController()
+    {
+        GameMainFacade.Instance.SceneStateController = this;
+    }
+    /// <summary>
+    /// 异步场景加载
+    /// </summary>
+    /// <param name="state"></param>
+    public void SetStateAsyn(ISceneState state)
+    {
+        stateWaitForLoad = state;
+        isSetState = true;
+    }
+
     /// <summary>
     /// 场景状态切换执行
     /// 新场景载入
@@ -29,7 +49,10 @@ public class SceneStateController
         if (isLoadScene)
         {
             mAO = SceneManager.LoadSceneAsync(mState.SceneName);
+            mLoadingUI= GameMainFacade.Instance.ShowLoadingUI();
             mIsRunState = false;
+            mLoadingProgress = 0f;
+            mAO.allowSceneActivation = false;
         }
         else
         {
@@ -38,17 +61,43 @@ public class SceneStateController
         }
        
     }
+
+
+
     /// <summary>
     /// 场景运行
     /// </summary>
-    public void StatUpdate()
+    public void StateUpdate()
     {
-        if (mAO != null && mAO.isDone == false) return;
+        if (isSetState==true)
+        {
+            isSetState = false;
+            SetState(stateWaitForLoad);
+            stateWaitForLoad = null;
+            return;
+        }
+
+        if (mAO != null && mAO.isDone == false)
+        {
+            if (mLoadingProgress == mAO.progress && mAO.progress == 0.9f && mAO.allowSceneActivation == false)
+            {
+                mAO.allowSceneActivation = true;
+                mLoadingProgress = 0f;
+            }
+            if (mLoadingProgress<mAO.progress && mAO.allowSceneActivation == false)
+            {
+                mLoadingProgress = Mathf.Min(mAO.progress, mLoadingProgress + 0.1f);
+                mLoadingUI.SetLoadingMessage(mLoadingProgress+0.1f);
+            }
+            return;
+        }
         
         if (mIsRunState==false&&mAO != null&&mAO.isDone==true)
         {
-            mState.StateStart();
+           
             mIsRunState = true;
+            mAO = null;
+            mState.StateStart();
         }
         if (mState != null)
         {

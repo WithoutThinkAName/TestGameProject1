@@ -26,7 +26,7 @@ public class EnemyChaseState : IEnemyState
     /// </summary>
     public override void DoBeForeEntering()
     {
-        mTargetPosition = GameStageFacade.Instance.GetEnemyTargetosition();
+        mTargetPosition = GameMode1Facade.Instance.GetEnemyTargetosition();
     }
     /// <summary>
     /// 状态每帧执行内容

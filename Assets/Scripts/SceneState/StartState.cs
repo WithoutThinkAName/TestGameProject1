@@ -11,6 +11,8 @@ public class StartState:ISceneState
 {
     public StartState(SceneStateController controller) : base("01StartScene", controller) { }
 
+
+    private GameObject mLogoObj;
     private Text mLogo;//标题文字or图片
     private float mSmoothingSpeed = 0.5f;//标题效果切换速率
     private float mWaitTime = 2f;//开始状态持续事件
@@ -19,9 +21,13 @@ public class StartState:ISceneState
     /// </summary>
     public override void StateStart()
     {
+        mLogoObj = GameObject.Find("Logo");
         mLogo = GameObject.Find("LogoText").GetComponent<Text>();
         mLogo.color = Color.white;
     }
+
+   
+
     /// <summary>
     /// 每帧运行
     /// </summary>
@@ -32,6 +38,7 @@ public class StartState:ISceneState
         mWaitTime -= Time.deltaTime;
         if (mWaitTime<=0)
         {
+            mLogoObj.AddComponent<DestoryForTime>().SetDestory(0.5f);
             //mController.SetState(new MainMenuState(mController));
             mController.SetState(new LoginAndRegistrationState(mController));
         }

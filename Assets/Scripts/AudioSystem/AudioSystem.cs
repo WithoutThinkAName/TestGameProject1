@@ -30,7 +30,7 @@ public class AudioSystem:IGameSystem
 
         UnityTool.Attach(GameObject.Find("GameLoop"), mAudioSourceGO);
 
-        PlaySound(mBackgroundAS, Sound_Bg_Moderate,1f, true);
+        //PlaySound(mBackgroundAS, Sound_Bg_Moderate,1f, true);
     }
     /// <summary>
     /// 每帧运行
@@ -59,7 +59,7 @@ public class AudioSystem:IGameSystem
     /// <param name="soundName"></param>
     public void PlayBackgroundSound(string soundName)
     {
-        PlaySound(mBackgroundAS, soundName,1f, true);
+        PlaySound(mBackgroundAS, soundName,0.5f, true);
     }
     /// <summary>
     /// 切换效果音

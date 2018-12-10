@@ -70,7 +70,7 @@ public abstract class IStageHandler
     private void CheckFinished()
     {
         mAliveCountVisitor.Reset();
-        GameStageFacade.Instance.RunVisitor(mAliveCountVisitor);
+        GameMode1Facade.Instance.RunVisitor(mAliveCountVisitor);        
         if (mIsAllEnemySpawned == true&&mAliveCountVisitor.enemyCount==0)
         {            
             mStageSystem.EnterNextStage();

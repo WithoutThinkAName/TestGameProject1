@@ -41,7 +41,7 @@ public class SoldierBuilder : ICharacterBuilder
     /// </summary>
     public override void AddIncharacterSystem()
     {
-        GameStageFacade.Instance.AddSoldier(mCharacter as ISoldier);        
+        GameMode1Facade.Instance.AddSoldier(mCharacter as ISoldier);        
     }
     /// <summary>
     /// 创建士兵武器游戏对象

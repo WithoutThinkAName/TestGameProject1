@@ -20,7 +20,8 @@ public class ScreenSystem:IGameSystem
     protected float mScreenMoveRateZ = 0.1f;//Y轴速率
     protected float mScreenScaleChangeRate = 1f;//缩放速率
 
-
+    private bool canHandle = true;
+    public bool ScreenCanHandle { set { canHandle = value; } }
     /// <summary>
     /// 初始化
     /// </summary>
@@ -56,6 +57,8 @@ public class ScreenSystem:IGameSystem
     /// </summary>
     public override void Update()
     {
+        if (canHandle == false) return;
+        
         base.Update();
         UpgradeScreenHandle();
     }

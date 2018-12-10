@@ -4,22 +4,27 @@ using System.Text;
 using UnityEngine;
 using Common;
 
+/// <summary>
+/// 请求处理系统
+/// </summary>
 public class RequestSystem:IGameSystem
 {
-
+    //请求类型字典
     private Dictionary<ActionCode, BaseRequest> mRequestDict = new Dictionary<ActionCode, BaseRequest>();
-
-    public override void Init()
-    {
-        base.Init();
-    }
-
-
+    
+    /// <summary>
+    /// 添加请求类型
+    /// </summary>
+    /// <param name="actionCode"></param>
+    /// <param name="request"></param>
     public void AddRequest(ActionCode actionCode, BaseRequest request)
     {
         mRequestDict.Add(actionCode, request);
     }
-
+    /// <summary>
+    /// 移除请求类型
+    /// </summary>
+    /// <param name="actionCode"></param>
     public void RemoveRequest(ActionCode actionCode)
     {
         if (mRequestDict.ContainsKey(actionCode)==false)
@@ -33,7 +38,11 @@ public class RequestSystem:IGameSystem
         }
         
     }
-
+    /// <summary>
+    /// 处理请求
+    /// </summary>
+    /// <param name="actionCode"></param>
+    /// <param name="data"></param>
     public void HandleRequest(ActionCode actionCode, string data)
     {
         BaseRequest request = mRequestDict.TryGet<ActionCode, BaseRequest>(actionCode);

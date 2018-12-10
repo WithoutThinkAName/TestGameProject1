@@ -39,7 +39,7 @@ public class EnemyBuilder : ICharacterBuilder
     /// </summary>
     public override void AddIncharacterSystem()
     {
-        GameStageFacade.Instance.AddEnemy(mCharacter as IEnemy);
+        GameMode1Facade.Instance.AddEnemy(mCharacter as IEnemy);
     }
     /// <summary>
     /// 创建敌人武器

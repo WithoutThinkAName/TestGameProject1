@@ -16,21 +16,11 @@ public class MainMenuState : ISceneState {
     public override void StateStart()
     {
         base.StateStart();
-        //GameObject.Find("StartButton").GetComponent<Button>().onClick.AddListener(OnStartButtonClick);
-        GameStageFacade.Instance.SetIsGameOver(false);
+        GameMode1Facade.Instance.SetIsGameOver(false);
+        mMainFacade.ShowUIPanel(UIPanelType.MainMenuUI);
     }
 
-    public override void StateUpdate()
-    {
-        base.StateUpdate();
-        GameMainFacade.Instance.UpdateClient();
-    }
+    
 
-    /// <summary>
-    /// 游戏开始按钮事件监听
-    /// </summary>
-    private void OnStartButtonClick()
-    {
-        mController.SetState(new BattleState(mController));
-    }
+   
 }

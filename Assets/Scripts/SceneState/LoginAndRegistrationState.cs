@@ -11,20 +11,14 @@ public class LoginAndRegistrationState : ISceneState
 
     public override void StateStart()
     {
-        GameMainFacade.Instance.InitClient();
+        base.StateStart();
+        mMainFacade.ShowUIPanel(UIPanelType.LoginBackgroundUI);
+        mMainFacade.PlayBackgroundSound(AudioSystem.Sound_Bg_Moderate);
     }
 
-    public override void StateEnd()
-    {
-        base.StateEnd();
+ 
+   
 
-
-    }
-    public override void StateUpdate()
-    {
-        base.StateUpdate();
-        GameMainFacade.Instance.UpdateClient();
-    }
 
 }
 

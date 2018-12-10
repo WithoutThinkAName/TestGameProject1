@@ -27,11 +27,11 @@ public class HeartSystem:IGameSystem
     public void ReduceHeart()
     {
         mNowHeart--;
-        mFacade.UpdateHeartCount(mNowHeart);
+        //mFacade.UpdateHeartCount(mNowHeart);
 
         if (mNowHeart<=0)
         {
-            mFacade.ShowGameOverUI("游戏失败！");
+            //mFacade.ShowGameOverUI("游戏失败！");
         }
     }
 
