@@ -16,9 +16,9 @@ public class AchievementSystem : IGameSystem
     public override void Init()
     {
         base.Init();
-        mFacade.RegisterObserver(GameEventType.EnemyKilled, new EnemyKlledObserverAchievement(this));
-        mFacade.RegisterObserver(GameEventType.SoldierKilled, new SoldierKilledObserverAchievement(this));
-        mFacade.RegisterObserver(GameEventType.NewStage, new NewStageObserverAchievement(this));
+        mMode1Facade.RegisterObserver(GameEventType.EnemyKilled, new EnemyKlledObserverAchievement(this));
+        mMode1Facade.RegisterObserver(GameEventType.SoldierKilled, new SoldierKilledObserverAchievement(this));
+        mMode1Facade.RegisterObserver(GameEventType.NewStage, new NewStageObserverAchievement(this));
     }
 
     /// <summary>

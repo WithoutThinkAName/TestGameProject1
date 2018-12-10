@@ -28,8 +28,7 @@ public class UIManagerSystem:IGameSystem
     private LoadingUI mLoadingUI=null;
 
     private string mMsgAsyn = null;
-
-    private bool IsSingleMode = false;
+    
 
     public override void Init()
     {
@@ -65,8 +64,6 @@ public class UIManagerSystem:IGameSystem
                 panel.Update();
             }
         }
-
-
     }
     /// <summary>
     /// 异步消息UI显示
@@ -104,6 +101,43 @@ public class UIManagerSystem:IGameSystem
         return mLoadingUI;
     }
    
+    /// <summary>
+    /// 显示兵营信息
+    /// </summary>
+    /// <param name="camp"></param>
+    public void ShowCampInfo(ICamp camp)
+    {
+        GameMode1UI panel =(GameMode1UI) panelDict.TryGet(UIPanelType.GameMode1UI);
+        panel.ShowCampInfo(camp);
+    }
+    /// <summary>
+    /// 刷新能量信息
+    /// </summary>
+    /// <param name="nowEnergy"></param>
+    /// <param name="maxEnergy"></param>
+    public void UpdateEnergySlider(int nowEnergy, int maxEnergy)
+    {
+        GameMode1UI panel = (GameMode1UI)panelDict.TryGet(UIPanelType.GameMode1UI);
+        panel.UpdateEnergySlider(nowEnergy, maxEnergy);
+    }
+    /// <summary>
+    /// 更新关卡数
+    /// </summary>
+    /// <param name="lv"></param>
+    public void UpdateStageLv(int lv)
+    {
+        GameMode1UI panel = (GameMode1UI)panelDict.TryGet(UIPanelType.GameMode1UI);
+        panel.UpdateStageLv(lv);
+    }
+    /// <summary>
+    /// 更新关卡生命心数
+    /// </summary>
+    /// <param name="heartCount"></param>
+    public void UpdateHeartCount(int heartCount)
+    {
+        GameMode1UI panel = (GameMode1UI)panelDict.TryGet(UIPanelType.GameMode1UI);
+        panel.UpdateHeartCount(heartCount);
+    }
     /// <summary>
     /// 把某个页面入栈，把某个页面显示在界面上
     /// </summary>

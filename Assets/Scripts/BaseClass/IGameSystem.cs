@@ -8,7 +8,7 @@ using UnityEngine;
 public abstract class IGameSystem
 {
     protected GameMainFacade mMainFacade;//主中介者
-    protected GameMode1Facade mFacade;//游戏中介者
+    protected GameMode1Facade mMode1Facade;//游戏中介者
 
     /// <summary>
     /// 系统初始化方法
@@ -16,7 +16,7 @@ public abstract class IGameSystem
     public virtual void Init()
     {
         mMainFacade = GameMainFacade.Instance;//中介者初始化
-        mFacade = GameMode1Facade.Instance;
+        mMode1Facade = GameMode1Facade.Instance;
     }
     /// <summary>
     /// 系统每帧运行方法

@@ -30,7 +30,7 @@ public class StageSystem : IGameSystem
         base.Init();
         InitPosition();
         InitStageChain();
-        mFacade.RegisterObserver(GameEventType.EnemyKilled, new EnemyKilledObserverStageSystem(this));
+        mMode1Facade.RegisterObserver(GameEventType.EnemyKilled, new EnemyKilledObserverStageSystem(this));
     }
     /// <summary>
     /// 每帧运行
@@ -110,15 +110,15 @@ public class StageSystem : IGameSystem
     { 
         mLv++;
         //Debug.Log("新关卡" + mLv);
-        mFacade.NotifySubject(GameEventType.NewStage);
-        //mFacade.UpgradeStageLv(mLv);
+        mMode1Facade.NotifySubject(GameEventType.NewStage);
+        mMode1Facade.UpgradeStageLv(mLv);
     }
     /// <summary>
     /// 游戏通关结束提示
     /// </summary>
     public void StageClear()
     {
-        //mFacade.ShowGameOverUI("恭喜通关！");
+        mMainFacade.ShowUIPanel(UIPanelType.GameOverUI);
     }
 }
 

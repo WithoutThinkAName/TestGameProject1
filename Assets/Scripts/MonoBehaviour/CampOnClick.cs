@@ -26,7 +26,7 @@ public class CampOnClick:MonoBehaviour
     /// </summary>
     public void ShowCampInfo()
     {
-        //GameStageFacade.Instance.ShowCampInfo(mCamp);
+        GameMode1Facade.Instance.ShowCampInfo(mCamp);
     }
 }
 

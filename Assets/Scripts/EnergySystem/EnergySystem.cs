@@ -27,7 +27,7 @@ public class EnergySystem : IGameSystem
     {
         base.Update();
 
-        //mFacade.UpgradeEnergySlider((int)mNowEnergy, Max_Energy);
+        mMode1Facade.UpgradeEnergySlider((int)mNowEnergy, Max_Energy);
 
         if (mNowEnergy >= Max_Energy) return;
 
@@ -35,7 +35,7 @@ public class EnergySystem : IGameSystem
 
         mNowEnergy = Mathf.Min(mNowEnergy, Max_Energy);
 
-        //mFacade.UpgradeEnergySlider((int)mNowEnergy, Max_Energy);
+        mMode1Facade.UpgradeEnergySlider((int)mNowEnergy, Max_Energy);
     }
     /// <summary>
     /// 消耗能量

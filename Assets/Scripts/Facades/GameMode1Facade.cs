@@ -109,6 +109,14 @@ public class GameMode1Facade
         return mCampSystem.FindSoldierCampByCampType(soldierType);
     }
     /// <summary>
+    /// 显示士兵兵营UI信息
+    /// </summary>
+    /// <param name="camp"></param>
+    public void ShowCampInfo(ICamp camp)
+    {
+        GameMainFacade.Instance.UIManagerSystem.ShowCampInfo(camp);
+    }
+    /// <summary>
     /// 人物系统添加士兵对象
     /// </summary>
     /// <param name="soldier"></param>
@@ -150,24 +158,24 @@ public class GameMode1Facade
     {
         mEnergySystem.RecycleEnergy(value);
     }
-    
-    ///// <summary>
-    ///// 更新能量条数据
-    ///// </summary>
-    ///// <param name="nowEnergy"></param>
-    ///// <param name="maxEnergy"></param>
-    //public void UpgradeEnergySlider(int nowEnergy, int maxEnergy)
-    //{
-    //    mGameStateInfoUI.UpdateEnergySlider(nowEnergy, maxEnergy);
-    //}
-    ///// <summary>
-    ///// 更新当前关卡数
-    ///// </summary>
-    ///// <param name="lv"></param>
-    //public void UpgradeStageLv(int lv)
-    //{
-    //    mGameStateInfoUI.UpdateStageLv(lv);
-    //}
+
+    /// <summary>
+    /// 更新能量条数据
+    /// </summary>
+    /// <param name="nowEnergy"></param>
+    /// <param name="maxEnergy"></param>
+    public void UpgradeEnergySlider(int nowEnergy, int maxEnergy)
+    {
+        GameMainFacade.Instance.UIManagerSystem.UpdateEnergySlider(nowEnergy, maxEnergy);
+    }
+    /// <summary>
+    /// 更新当前关卡数
+    /// </summary>
+    /// <param name="lv"></param>
+    public void UpgradeStageLv(int lv)
+    {
+        GameMainFacade.Instance.UIManagerSystem.UpdateStageLv(lv);
+    }
     /// <summary>
     /// 关卡生命值减少
     /// </summary>
@@ -175,15 +183,15 @@ public class GameMode1Facade
     {
         mHeartSystem.ReduceHeart();
     }
-   
-    ///// <summary>
-    ///// 更新关卡生命值
-    ///// </summary>
-    ///// <param name="heartCount"></param>
-    //public void UpdateHeartCount(int heartCount)
-    //{
-    //    mGameStateInfoUI.UpdateHeartCount(heartCount);
-    //}
+
+    /// <summary>
+    /// 更新关卡生命值
+    /// </summary>
+    /// <param name="heartCount"></param>
+    public void UpdateHeartCount(int heartCount)
+    {
+        GameMainFacade.Instance.UIManagerSystem.UpdateHeartCount(heartCount);
+    }
     /// <summary>
     /// 根据事件类型，注册观察者
     /// </summary>

@@ -18,6 +18,7 @@ public class GameMainFacade
 
     private PlayerSystem mPlayerSystem;
     private UIManagerSystem mUIManagerSystem;//UI管理系统
+    public UIManagerSystem UIManagerSystem { get { return mUIManagerSystem; } }
     private ClientSystem mClientSystem;//客户端系统
     private RequestSystem mRequestSystem;//请求处理系统
     private AudioSystem mAudioSystem;//声音系统
@@ -134,6 +135,7 @@ public class GameMainFacade
     {
         mSceneStateController.SetStateAsyn(new Mode1BattleState(mSceneStateController));
     }
+    
 
     /// <summary>
     /// 添加服务器请求

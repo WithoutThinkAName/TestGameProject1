@@ -18,8 +18,7 @@ public abstract class IBaseUI:MonoBehaviour
     {
         mMainfacade = GameMainFacade.Instance;
         mMode1Facade = GameMode1Facade.Instance;
-
-
+        
         mUIRoot=gameObject;
         thisPanel = GetComponent<RectTransform>();
     }
