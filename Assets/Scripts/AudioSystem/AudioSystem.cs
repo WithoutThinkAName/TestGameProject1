@@ -59,7 +59,7 @@ public class AudioSystem:IGameSystem
     /// <param name="soundName"></param>
     public void PlayBackgroundSound(string soundName)
     {
-        PlaySound(mBackgroundAS, soundName,0.5f, true);
+        PlaySound(mBackgroundAS, soundName,0.2f, true);
     }
     /// <summary>
     /// 切换效果音
