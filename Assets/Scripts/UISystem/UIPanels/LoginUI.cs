@@ -33,8 +33,7 @@ public class LoginUI:IBaseUI
         mCloseBtn.onClick.AddListener(CloseBtnOnClick);
 
         mLoginRequest = GetComponent<LoginRequest>();
-
-        gameObject.SetActive(false);
+        
     }
 
     /// <summary>
@@ -58,7 +57,7 @@ public class LoginUI:IBaseUI
     {
         thisPanel.localScale = new Vector3(0.1f, 0.1f, 0.1f);
 
-        thisPanel.DOScale(1f, 0.2f);
+        thisPanel.DOScale(1f, mAnimSpeed);
     }
 
     /// <summary>
@@ -74,7 +73,7 @@ public class LoginUI:IBaseUI
     private void HideAnim()
     {
         thisPanel.localScale = Vector3.one;
-        thisPanel.DOScale(0.1f, 0.2f).OnComplete(() => base.OnExit());
+        thisPanel.DOScale(0.1f, mAnimSpeed).OnComplete(() => base.OnExit());
     }
     
     /// <summary>
@@ -94,7 +93,7 @@ public class LoginUI:IBaseUI
         }
         if (msg!="")
         {
-            mUIManager.ShowMessageUI(msg);
+            mUIManager.ShowMessageUIAsyn(msg);
             return;
         }
         Debug.Log("登陆请求："+ mUserNameInput.text +"-"+ mUserPasswordInput.text);
@@ -106,7 +105,7 @@ public class LoginUI:IBaseUI
         Debug.Log(returnCode);
         if (returnCode==ReturnCode.Success)
         {
-            mUIManager.ShowMessageUIAsyn("登录成功");
+            //mUIManager.ShowMessageUIAsyn("登录成功");
 
         }
         else

@@ -19,6 +19,7 @@ public class RequestSystem:IGameSystem
     /// <param name="request"></param>
     public void AddRequest(ActionCode actionCode, BaseRequest request)
     {
+        if (mRequestDict.ContainsKey(actionCode)) return;
         mRequestDict.Add(actionCode, request);
     }
     /// <summary>

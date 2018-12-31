@@ -19,6 +19,12 @@
 {"panelTypeString":"MainMenuUI",
 "path":"UIPanel/MainMemuPanel"},
 
+{"panelTypeString":"MenuMode1UI",
+"path":"UIPanel/Mode1Panel"},
+
+{"panelTypeString":"MenuMode2UI",
+"path":"UIPanel/Mode2Panel"},
+
 {"panelTypeString":"GameMode1UI",
 "path":"UIPanel/GameMode1Panel"},
 

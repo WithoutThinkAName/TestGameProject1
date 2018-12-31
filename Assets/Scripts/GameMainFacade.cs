@@ -5,7 +5,8 @@ using UnityEngine;
 using Common;
 
 /// <summary>
-/// 客户端主中介
+/// 客户端主中外观
+/// 充当中介
 /// </summary>
 public class GameMainFacade
 {
@@ -95,7 +96,7 @@ public class GameMainFacade
     /// <param name="message"></param>
     public void ShowMessageUI(string message)
     {
-        mUIManagerSystem.ShowMessageUI(message);
+        mUIManagerSystem.ShowMessageUIAsyn(message);
     }
     /// <summary>
     /// 异步加载场景过场UI
@@ -193,6 +194,14 @@ public class GameMainFacade
         memento.SaveData();
     }
     /// <summary>
+    /// 退出
+    /// </summary>
+    public void QuitGame()
+    {
+        ReleaseClient();
+        Application.Quit();
+    }
+    /// <summary>
     /// 背景声音变更
     /// </summary>
     /// <param name="soundName"></param>
@@ -217,6 +226,14 @@ public class GameMainFacade
         mPlayerSystem.UserData = userdata;
         IsSingleMode = false;
         mSceneStateController.SetStateAsyn(new MainMenuState(mSceneStateController));
+    }
+    /// <summary>
+    /// 成功加入一个房间
+    /// </summary>
+    /// <param name="room"></param>
+    public void SetCurrentRoom(RoomInfo room)
+    {
+        mPlayerSystem.CurrentRoom = room;
     }
     /// <summary>
     /// 用户数据的获取方法

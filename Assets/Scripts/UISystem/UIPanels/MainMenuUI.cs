@@ -7,13 +7,13 @@ using DG.Tweening;
 
 public class MainMenuUI:IBaseUI
 {
-    private RectTransform mPlayerinfo;
-    private RectTransform mButton_Mode1;
-    private RectTransform mButton_Mode2;
-    private RectTransform mButton_Mode3;
-    private RectTransform mButton_Mode4;
-    private RectTransform mButton_Mode5;
-    private RectTransform mButton_Mode6;
+    private Transform mPlayerinfo;
+    private Transform mButton_Mode1;
+    private Transform mButton_Mode2;
+    private Transform mButton_Mode3;
+    private Transform mButton_Mode4;
+    private Transform mButton_Mode5;
+    private Transform mButton_Mode6;
 
     private Text mUserNameLab;
     private Button mMode1Btn;
@@ -22,11 +22,8 @@ public class MainMenuUI:IBaseUI
     private Button mMode4Btn;
     private Button mMode5Btn;
     private Button mMode6Btn;
-
-    private float mScreenX;
-    private float mScreenY;
-
-    private float mAnimSpeed;
+    private Button mQuit;
+    
     /// <summary>
     /// 初始化
     /// </summary>
@@ -34,13 +31,13 @@ public class MainMenuUI:IBaseUI
     {
         base.Init();
 
-        mPlayerinfo = UITools.FindChild<RectTransform>(mUIRoot, "PlayerInfoUI");
-        mButton_Mode1 = UITools.FindChild<RectTransform>(mUIRoot, "Button_Mode1");
-        mButton_Mode2 = UITools.FindChild<RectTransform>(mUIRoot, "Button_Mode2");
-        mButton_Mode3 = UITools.FindChild<RectTransform>(mUIRoot, "Button_Mode3");
-        mButton_Mode4 = UITools.FindChild<RectTransform>(mUIRoot, "Button_Mode4");
-        mButton_Mode5 = UITools.FindChild<RectTransform>(mUIRoot, "Button_Mode5");
-        mButton_Mode6 = UITools.FindChild<RectTransform>(mUIRoot, "Button_Mode6");
+        mPlayerinfo = UITools.FindChild<Transform>(mUIRoot, "PlayerInfoUI");
+        mButton_Mode1 = UITools.FindChild<Transform>(mUIRoot, "Button_Mode1");
+        mButton_Mode2 = UITools.FindChild<Transform>(mUIRoot, "Button_Mode2");
+        mButton_Mode3 = UITools.FindChild<Transform>(mUIRoot, "Button_Mode3");
+        mButton_Mode4 = UITools.FindChild<Transform>(mUIRoot, "Button_Mode4");
+        mButton_Mode5 = UITools.FindChild<Transform>(mUIRoot, "Button_Mode5");
+        mButton_Mode6 = UITools.FindChild<Transform>(mUIRoot, "Button_Mode6");
         
         mUserNameLab = UITools.FindChild<Text>(mUIRoot, "UserNameLab");
         mMode1Btn = UITools.FindChild<Button>(mUIRoot, "Button_Mode1");
@@ -49,7 +46,7 @@ public class MainMenuUI:IBaseUI
         mMode4Btn = UITools.FindChild<Button>(mUIRoot, "Button_Mode4");
         mMode5Btn = UITools.FindChild<Button>(mUIRoot, "Button_Mode5");
         mMode6Btn = UITools.FindChild<Button>(mUIRoot, "Button_Mode6");
-
+        mQuit = UITools.FindChild<Button>(mUIRoot, "Button_Quit");
 
         mMode1Btn.onClick.AddListener(Mode1BtnOnClick);
         mMode2Btn.onClick.AddListener(Mode2BtnOnClick);
@@ -57,18 +54,16 @@ public class MainMenuUI:IBaseUI
         mMode4Btn.onClick.AddListener(Mode4BtnOnClick);
         mMode5Btn.onClick.AddListener(Mode5BtnOnClick);
         mMode6Btn.onClick.AddListener(Mode6BtnOnClick);
-
+        mQuit.onClick.AddListener(mQuitBtnOnClick);
 
         //预留的按钮，暂时没用不显示
         mButton_Mode3.gameObject.SetActive(false);
         mButton_Mode4.gameObject.SetActive(false);
         mButton_Mode5.gameObject.SetActive(false);
         mButton_Mode6.gameObject.SetActive(false);
+        
 
-        mAnimSpeed = 0.2f;
-
-        mScreenX = Screen.width;
-        mScreenY = Screen.height;
+        
 
     }
     /// <summary>
@@ -85,6 +80,7 @@ public class MainMenuUI:IBaseUI
         {
             mUserNameLab.text = mMainfacade.GetUserData().UserName;
         }
+        
         EnterAnim();
     }
     /// <summary>
@@ -92,31 +88,54 @@ public class MainMenuUI:IBaseUI
     /// </summary>
     private void EnterAnim()
     {
+        mMode1Btn.enabled = true;
+        mMode2Btn.enabled = true;
+        mMode3Btn.enabled = true;
+        mMode4Btn.enabled = true;
+        mMode5Btn.enabled = true;
+        mMode6Btn.enabled = true;
 
-        mPlayerinfo.localPosition = new Vector3(-mScreenX / 5, mScreenY / 2 + 200f, 0);
-        mPlayerinfo.DOLocalMoveY(mScreenY / 10 * 3, mAnimSpeed);
+        mPlayerinfo.localPosition = new Vector3(-mScreenX / 5, mScreenY, 0);
+        mButton_Mode1.localPosition = new Vector3(-mScreenX, mScreenY / 10 * 1, 0);
+        mButton_Mode3.localPosition = new Vector3(-mScreenX, -mScreenY / 10 * 1, 0);
+        mButton_Mode5.localPosition = new Vector3(-mScreenX, -mScreenY / 10 * 3, 0);
 
-        mButton_Mode1.localPosition = new Vector3(-1300, mScreenY / 10 * 1, 0);
-        mButton_Mode1.DOLocalMoveX(-mScreenX / 4, mAnimSpeed);                
+        mButton_Mode2.localPosition = new Vector3(mScreenX, mScreenY / 10 * 1, 0);
+        mButton_Mode4.localPosition = new Vector3(mScreenX, -mScreenY / 10 * 1, 0);
+        mButton_Mode6.localPosition = new Vector3(mScreenX, -mScreenY / 10 * 3, 0);
 
-        mButton_Mode3.localPosition = new Vector3(-1300, -mScreenY / 10 * 1, 0);
-        mButton_Mode3.DOLocalMoveX(-mScreenX / 4, mAnimSpeed);
-       
-        mButton_Mode5.localPosition = new Vector3(-1300, -mScreenY / 10 * 3, 0);
-        mButton_Mode5.DOLocalMoveX(-mScreenX / 4, mAnimSpeed);
+        mPlayerinfo.DOMoveY(mScreenY / 5 * 4, mAnimSpeed);
+        mButton_Mode1.DOMoveX(mScreenX / 4, mAnimSpeed);
+        mButton_Mode3.DOMoveX(mScreenX / 4, mAnimSpeed);
+        mButton_Mode5.DOMoveX(mScreenX / 4, mAnimSpeed);        
+        mButton_Mode2.DOMoveX(mScreenX / 4 * 3, mAnimSpeed);
+        mButton_Mode4.DOMoveX(mScreenX / 4 * 3, mAnimSpeed);
+        mButton_Mode6.DOMoveX(mScreenX / 4 * 3, mAnimSpeed);
+        
 
+        if (mMainfacade.IsSingleMode == true)
+        {
+            mMode2Btn.enabled = false;
+            mMode4Btn.enabled = false;
+            mMode6Btn.enabled = false;
+        }
+    }
+    /// <summary>
+    /// 继续执行
+    /// </summary>
+    public override void OnResume()
+    {
+        base.OnResume();
 
-        mButton_Mode4.localPosition = new Vector3(1300, -mScreenY / 10 * 1, 0);
-        mButton_Mode2.localPosition = new Vector3(1300, mScreenY / 10 * 1, 0);
-        mButton_Mode6.localPosition = new Vector3(1300, -mScreenY / 10 * 3, 0);
-        if (mMainfacade.IsSingleMode==false)
-        {           
-            mButton_Mode4.DOLocalMoveX(mScreenX / 4, mAnimSpeed);
-            
-            mButton_Mode2.DOLocalMoveX(mScreenX / 4, mAnimSpeed);
-            
-            mButton_Mode6.DOLocalMoveX(mScreenX / 4, mAnimSpeed);
-        }   
+        EnterAnim();
+    }
+    /// <summary>
+    /// 暂停执行
+    /// </summary>
+    public override void OnPause()
+    {
+        base.OnPause();
+        HideAnim();
     }
     /// <summary>
     /// 退出时执行
@@ -124,29 +143,36 @@ public class MainMenuUI:IBaseUI
     public override void OnExit()
     {
         HideAnim();
+        base.OnExit();
     }
     /// <summary>
     /// 退出动画
     /// </summary>
     private void HideAnim()
     {
+        mMode1Btn.enabled = false;
+        mMode2Btn.enabled = false;
+        mMode3Btn.enabled = false;
+        mMode4Btn.enabled = false;
+        mMode5Btn.enabled = false;
+        mMode6Btn.enabled = false;
 
-        mPlayerinfo.DOLocalMoveY(mScreenY / 2 + 200, 1f);
-        
-        mButton_Mode1.DOLocalMoveX(-1300, mAnimSpeed);
-        
-        mButton_Mode3.DOLocalMoveX(-1300, mAnimSpeed);
-        
-        mButton_Mode5.DOLocalMoveX(-1300, mAnimSpeed).OnComplete(() => base.OnExit());
 
-        if (mMainfacade.IsSingleMode == false)
-        {
-            mButton_Mode4.DOLocalMoveX(1300, mAnimSpeed);
-            
-            mButton_Mode2.DOLocalMoveX(1300, mAnimSpeed);
-            
-            mButton_Mode6.DOLocalMoveX(1300, mAnimSpeed);
-        }
+        mPlayerinfo.DOMoveY(mScreenY *1.5f, mAnimSpeed);
+
+        mButton_Mode1.DOMoveX(-mScreenX / 2, mAnimSpeed);
+
+        mButton_Mode3.DOMoveX(-mScreenX / 2, mAnimSpeed);
+
+        mButton_Mode5.DOMoveX(-mScreenX / 2, mAnimSpeed);
+
+        mButton_Mode4.DOMoveX(mScreenX * 1.5f, mAnimSpeed);
+
+        mButton_Mode2.DOMoveX(mScreenX * 1.5f, mAnimSpeed);
+
+        mButton_Mode6.DOMoveX(mScreenX * 1.5f, mAnimSpeed);
+
+        
     }
     /// <summary>
     /// 模式1按钮点击事件
@@ -154,7 +180,8 @@ public class MainMenuUI:IBaseUI
     /// </summary>
     private void Mode1BtnOnClick()
     {
-        mMainfacade.EnterMode1State();
+        mUIManager.PushPanel(UIPanelType.MenuMode1UI);
+        
     }
     /// <summary>
     /// 模式2按钮点击事件
@@ -162,7 +189,7 @@ public class MainMenuUI:IBaseUI
     /// </summary>
     private void Mode2BtnOnClick()
     {
-
+        mUIManager.PushPanel(UIPanelType.MenuMode2UI);
     }
     /// <summary>
     /// 模式3按钮点击事件
@@ -195,6 +222,14 @@ public class MainMenuUI:IBaseUI
     private void Mode6BtnOnClick()
     {
 
+    }
+    /// <summary>
+    /// 退出按钮点击事件
+    /// </summary>
+    private void mQuitBtnOnClick()
+    {
+        PlayClickSound();
+        mMainfacade.QuitGame();
     }
 }
 

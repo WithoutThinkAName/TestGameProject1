@@ -78,7 +78,7 @@ public class UIManagerSystem:IGameSystem
     /// 提示消息框
     /// </summary>
     /// <param name="message"></param>
-    public void ShowMessageUI(string message)
+    private void ShowMessageUI(string message)
     {
         MessageUI panel =(MessageUI) GetPanel(UIPanelType.MessageUI);
         

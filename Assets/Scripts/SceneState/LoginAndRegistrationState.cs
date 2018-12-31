@@ -13,7 +13,7 @@ public class LoginAndRegistrationState : ISceneState
     {
         base.StateStart();
         mMainFacade.ShowUIPanel(UIPanelType.LoginBackgroundUI);
-        mMainFacade.PlayBackgroundSound(AudioSystem.Sound_Bg_Moderate);
+        //mMainFacade.PlayBackgroundSound(AudioSystem.Sound_Bg_Moderate);
     }
 
  

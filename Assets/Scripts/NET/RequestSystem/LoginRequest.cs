@@ -32,12 +32,12 @@ public class LoginRequest:BaseRequest
         base.SendRequest(data);
     }
     /// <summary>
-    /// 登录请求服务器反馈
+    /// 服务器反馈
     /// </summary>
     /// <param name="data"></param>
     public override void OnResponse(string data)
     {
-        string[] strs = data.Split(',');
+        string[] strs = data.Split('|');
         ReturnCode returnCode = (ReturnCode)int.Parse(strs[0]);
         mLoginUI.OnLoginResponse(returnCode);
 
@@ -50,5 +50,6 @@ public class LoginRequest:BaseRequest
             mMainFacade.LoginSuccess(userInfo);
         }
     }
+
 }
 

@@ -7,7 +7,9 @@ public enum UIPanelType  {
     LoginUI,
     RegistrationUI,
     MainMenuUI,
-    GameMode1UI,
+    MenuMode1UI,
+    MenuMode2UI,
+    GameMode1UI,    
     GamePauseUI,
     GameOverUI
 }

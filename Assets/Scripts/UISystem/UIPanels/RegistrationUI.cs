@@ -52,7 +52,7 @@ public class RegistrationUI:IBaseUI
     {
         thisPanel.localScale = new Vector3(0.1f, 0.1f, 0.1f);
 
-        thisPanel.DOScale(1f, 0.2f);
+        thisPanel.DOScale(1f, mAnimSpeed);
     }
     /// <summary>
     /// 窗口关闭前执行
@@ -68,7 +68,7 @@ public class RegistrationUI:IBaseUI
     private void HideAnim()
     {
         thisPanel.localScale = Vector3.one;
-        thisPanel.DOScale(0.1f, 0.2f).OnComplete(() => base.OnExit());
+        thisPanel.DOScale(0.1f, mAnimSpeed).OnComplete(() => base.OnExit());
     }
 
     /// <summary>
@@ -92,7 +92,7 @@ public class RegistrationUI:IBaseUI
         }
         if (msg != "")
         {
-            mUIManager.ShowMessageUI(msg);
+            mUIManager.ShowMessageUIAsyn(msg);
             return;
         }
         Debug.Log("注册请求：" + mUserNameInput.text + "-" + mUserPasswordInput.text);

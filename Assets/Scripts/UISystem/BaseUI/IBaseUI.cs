@@ -11,6 +11,11 @@ public abstract class IBaseUI:MonoBehaviour
     public UIManagerSystem UIManager { set { mUIManager = value; } }
     protected GameObject mUIRoot;//当前UI的根位置
     protected RectTransform thisPanel;
+    protected float mAnimSpeed;
+
+    protected float mScreenX { get { return Screen.width; } }
+    protected float mScreenY { get { return Screen.height; } }
+
     /// <summary>
     /// UI初始化方法
     /// </summary>
@@ -19,8 +24,10 @@ public abstract class IBaseUI:MonoBehaviour
         mMainfacade = GameMainFacade.Instance;
         mMode1Facade = GameMode1Facade.Instance;
         
-        mUIRoot=gameObject;
+        mUIRoot =gameObject;
         thisPanel = GetComponent<RectTransform>();
+
+        mAnimSpeed = 0.2f;
     }
     /// <summary>
     /// UI每帧运行方法

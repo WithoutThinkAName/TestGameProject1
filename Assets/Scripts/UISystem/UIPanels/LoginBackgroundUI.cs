@@ -83,7 +83,7 @@ public class LoginBackgroundUI:IBaseUI
     private void mQuitBtnOnClick()
     {
         PlayClickSound();
-        Application.Quit();
+        mMainfacade.QuitGame();
     }
 
 }

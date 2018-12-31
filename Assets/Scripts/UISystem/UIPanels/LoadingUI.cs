@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine.UI;
 
 public class LoadingUI:IBaseUI
 {
@@ -18,6 +17,7 @@ public class LoadingUI:IBaseUI
     {
         base.OnEnter();
 
+        mMessageLab.text = "Loading(0%)";
     }
     /// <summary>
     /// 等待载入的文本数据
